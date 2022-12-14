@@ -1,4 +1,5 @@
 body{
+  display:flex;
   height:1900px;
   width:1900px;
 }
@@ -95,5 +96,16 @@ body{
   margin:104px;
 }
 #lazy-hex{
-  font-size:60px;
+  font-size: 120px;
+  letter-spacing: -20px;
+}
+.hex:hover{
+margin-top: -5px;
+}
+@keyframes hexBounce {
+  
+}
+.hex-board{
+  display: flex;
+  align-self: center;
 }

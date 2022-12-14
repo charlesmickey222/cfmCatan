@@ -4,6 +4,7 @@ const colorOptions = ['Bone','Blood','']
   //array for names of developement cards
 const  devCards = ['knight','road-building','year-of-plenty','monopoly'];
 //--variables--//
+let playerNames = [];
 const gameState ={
   roundCount: 0, //the count of how many rounds have been played
   turnCount: 0,// how many turns through round have been played
