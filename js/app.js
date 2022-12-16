@@ -1,16 +1,18 @@
 //--constants--//
-//options that player has for colors
-const colorOptions = ['Bone','Blood','']
-  //array for names of developement cards
-const  devCards = ['knight','road-building','year-of-plenty','monopoly'];
+const colorOptions = ['Bone','Blood','Sludge','Slime']//options that player has for colors
+const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
+const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L','N','O','P','Q','R']; //made into object list later
 //--variables--//
 let playerNames = [];
 const gameState ={
   roundCount: 0, //the count of how many rounds have been played
   turnCount: 0,// how many turns through round have been played
-  leaderboard:[]// array of playerName strings sorted by VP, 
-                // not visible to players
+  leaderboard:[],// array of playerName strings sorted by VP, 
+  deckOfPlayers:null,
+  devCardDeck:null,
 }
+
+
 //--classes--//
 class Player{
   constructor (playerName, playerNum,hand){
@@ -21,20 +23,18 @@ class Player{
     this.cities=0; //-number of cities player holds,  4 added @ start
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 10 to win, 0 at start
-    //this.placedDevCards: cards[];  -face up development cards already played
-    //this.charName:string; -holds player name
-    //this.charColor:string; -holds player color
+    this.diceRoll=0;
   }
 }
 //creates and stores objects of classs Player in a object for functions of the game to iterate through.
 class PlayerDeck {
   constructor(numPlayers){
     this.numPlayers = numPlayers;
-    this.roster = ['player1','player2','player3','player4'];
+    this.roster = colorOptions;
   }
   populateRoster(){
     this.roster = this.roster.map(function(player, idx){
-        let newPlayer = new Player([/*emptyHand*/],player, idx);
+        let newPlayer = new Player(player, idx, []);
         newPlayer.settlements = 5;
         newPlayer.cities = 4;
         newPlayer.roadsHeld = 15;
@@ -106,7 +106,7 @@ class Board{
 
   }
 }
-const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L','N','O','P','Q','R'];
+
 class BoardTile{
   constructor(tileType){
     this.tileType = tileType;
@@ -115,13 +115,8 @@ class BoardTile{
     
   }
 }
-class numberChips extends BoardTile{
-    constructor(){
-       // this.num = num;
-        //this.letter = letter;
-        //this.dots = '';
-    }
-    makeChips(){
+
+function makeChips(){
       let arr = numTileList.map(function(letter){
         if(letter ==='B'){return {letter: letter, number:2, dots:'.',};
         }else if (letter === 'D' || letter === 'Q'){
@@ -143,18 +138,60 @@ class numberChips extends BoardTile{
       }
       });
       return arr;
-    }  
-}
+}  
+
 //--cached element references--//
 
 //--event listeners--//
 
 //--functions--//
-
 //initialization functions
+function init(){
+  gameState.deckOfPlayers = new PlayerDeck(4);
+  gameState.deckOfPlayers.populateRoster();
+  buildScoreCard()
 
+}
 //render functions
+function render(){
+  renderBoard();
+  renderPiecePens();
+}
 
+function renderBoard(){
+
+}
+
+function renderPiecePens(){
+
+}
+
+function buildScoreCard(){
+
+}
 //game state functions
+function startGame(){
+  rollForTurns
+}
 
+function changeTurn(){
+  //
+}
+function changeRound(){
+
+}
 //game play functions
+function rollForTurns(){
+  //all players in deck roll, results of roll stored in playerDeck, 
+}
+
+function rollDice(){
+  
+}
+
+function firstRoundTurn(player){
+
+}
+function takeTurn(player){
+
+}
