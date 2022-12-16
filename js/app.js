@@ -193,5 +193,37 @@ function firstRoundTurn(player){
 
 }
 function takeTurn(player){
+//until player clicks end turn or completes all possible moves, gameplay options will be displayed
+}
 
+function placeRoad(){
+  //check player resources
+  //find desired placement
+  //
+}
+
+function placeSettlement(){
+  //check player resources
+  //display message for insuffficieint resources
+  //allow placement on unoccupied, spaced out vertice
+}
+
+function placeCity(){
+  //check player resources
+  //display message for insuffficieint resources
+  //if sufficient resources find desired placement
+  //allow placement on vertice occupied by player's own settlement
+  //remove settlement
+  //place city
+
+function offerTrade(){
+  // check player resources
+  // place message for trade offer in each players id card
+  // if player clicks offer with viable input into field, message displays id card of player offering trade
+  // multiple trade offers may be made, only one accepted
+  // trade pop up has decline button
+}
+
+function tradeByPort(){
+  //check player resources, find the resources type of the port, exchange resources
 }
