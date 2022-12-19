@@ -1,5 +1,5 @@
 //--constants--//
-const colorOptions = ['Bone','Blood','Sludge','Slime']//options that player has for colors
+const colorOptions = ['Bone','Blood']//options that player has for colors
 const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L','N','O','P','Q','R']; //made into object list later
 //--variables--//
