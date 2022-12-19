@@ -10,6 +10,7 @@ const gameState ={
   leaderboard:[],// array of playerName strings sorted by VP, 
   deckOfPlayers:null,
   devCardDeck:null,
+  activePlayer:null,
 }
 
 
@@ -23,7 +24,10 @@ class Player{
     this.cities=0; //-number of cities player holds,  4 added @ start
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 10 to win, 0 at start
-    this.diceRoll=0;
+    this.diceRoll={};
+  }
+  setDiceRoll(obj){
+    this.diceRoll = obj;
   }
 }
 //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -41,6 +45,9 @@ class PlayerDeck {
         return newPlayer;
     })  
   }
+  getRoster(){
+    return this.roster;
+  }
 }
 
 //general card class to create a deck holding every kind of card
@@ -48,6 +55,7 @@ class Cards{
   constructor(cardType){
     this.cardType = cardType;
   }
+  
   buildDeck(){
 
   }
@@ -149,50 +157,58 @@ function makeChips(){
 function init(){
   gameState.deckOfPlayers = new PlayerDeck(4);
   gameState.deckOfPlayers.populateRoster();
-  buildScoreCard()
 
 }
 //render functions
 function render(){
   renderBoard();
-  renderPiecePens();
 }
 
 function renderBoard(){
-
+//display current state of gameBoard
 }
 
-function renderPiecePens(){
-
+function renderTurnCard(){
+//render the acive player's options for their turn
 }
 
-function buildScoreCard(){
-
+function buildPlayerCards(){
+//
 }
 //game state functions
 function startGame(){
-  rollForTurns
+  rollForTurns()
 }
 
 function changeTurn(){
   //
+  //if it is last player in deck's turn, changeRound
+  //set activePlayer to nextPlayer in deck
 }
-function changeRound(){
 
+function changeRound(){
+// add to round count,
 }
 //game play functions
 function rollForTurns(){
-  //all players in deck roll, results of roll stored in playerDeck, 
+for (plyr in gameState.deckOfPlayers){
+  object.setDiceRoll(rollDice());
+} 
 }
 
 function rollDice(){
-  
+  const dieOne = Math.floor(Math.random()*7);
+  const dieTwo = Math.floor(Math.random()*7);
+  return {one:dieOne, two:dieTwo, total:(dieOne+dieTwo)};
 }
 
-function firstRoundTurn(player){
-
+function firstAndSecondRoundTurn(player){
+//place one settlement and two roads
 }
+
 function takeTurn(player){
+//roll dice, corresponding resources given to all players
+//  if seven move robber, rob peer
 //until player clicks end turn or completes all possible moves, gameplay options will be displayed
 }
 
@@ -215,6 +231,7 @@ function placeCity(){
   //allow placement on vertice occupied by player's own settlement
   //remove settlement
   //place city
+}
 
 function offerTrade(){
   // check player resources
@@ -226,4 +243,18 @@ function offerTrade(){
 
 function tradeByPort(){
   //check player resources, find the resources type of the port, exchange resources
+}
+
+function robberRolled(){
+moveRobber();
+robPeer();
+}
+
+function moveRobber(){
+//place robber in chosen tile
+//set tiles number tile value to 0 temporarily
+}
+
+function robPeer(){
+// allow player to take two random cards from chosen players deck
 }
