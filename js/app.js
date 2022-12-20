@@ -2,6 +2,7 @@
 const colorOptions = ['Bone','Blood']//options that player has for colors
 const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L']; //made into object list later
+const longestRoadReq = 
 //--variables--//
 let playerNames = [];
 const gameState ={
@@ -241,11 +242,26 @@ moveRobber();
 robPeer();
 }
 
-function moveRobber(){
-//place robber in chosen tile
+function moveDomeMaster(){
+//place thunder dome games master in chosen tile
 //set tiles number tile value to 0 temporarily
 }
 
-function robPeer(){
-// allow player to take two random cards from chosen players deck
+function thunderDome(){
+// combat >8}
 }
+
+/*  ASCII BOARD
+            __
+          / A4 \
+  __      \ __ /      __
+/ F4 \ __ / G5 \ __ / B2 \
+\ __ / L5 \ __ / H5 \ __ /
+     \ __ / TD \ __ /
+  __ / K3 \ __ / I4 \ __
+/ E6 \ __ / J6 \ __ / C5 \
+\ __ /    \ __ /    \ __ /
+          / D3 \
+          \ __ /
+
+*/
