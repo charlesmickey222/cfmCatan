@@ -1,7 +1,7 @@
 //--constants--//
 const colorOptions = ['Bone','Blood']//options that player has for colors
 const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
-const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L','N','O','P','Q','R']; //made into object list later
+const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L']; //made into object list later
 //--variables--//
 let playerNames = [];
 const gameState ={
@@ -127,25 +127,16 @@ class BoardTile{
 function makeChips(){
       let arr = numTileList.map(function(letter){
         if(letter ==='B'){return {letter: letter, number:2, dots:'.',};
-        }else if (letter === 'D' || letter === 'Q'){
+        }else if (letter === 'D' || letter === 'K'){
           return {letter: letter, number: 3, dots:'..',}
-        }else if (letter === 'A' || letter === 'O'){
-          return {letter: letter, number: 5, dots:'...',};
-        }else if (letter === 'C' || letter === 'P'){
-            return {letter: letter, number: 6, dots:'....',};
-        }else if (letter === 'E' || letter === 'K'){
+        }else if (letter === 'A' || letter === 'F'|| letter === 'I'){
+          return {letter: letter, number: 4, dots:'...',};
+        }else if (letter === 'C' || letter === 'G'|| letter === 'H'|| letter === 'L'){
+            return {letter: letter, number: 5, dots:'....',};
+        }else if (letter === 'E' || letter === 'J'){
           return {letter: letter, number: 8, dots:'.....',};
-        }else if (letter === 'G' || letter === 'M'){
-          return {letter: letter, number: 9, dots:'....',};
-        }else if (letter === 'F' || letter === 'L'){
-            return {letter: letter, number: 10, dots:'...',};
-        }else if (letter === 'I' || letter === 'R'){
-          return {letter: letter, number: 11, dots:'..',};
-      }else if (letter === 'H'){
-        return {letter: letter, number: 12, dots:'.',};
-      }
-      });
-      return arr;
+        }
+      })
 }  
 
 //--cached element references--//
@@ -198,8 +189,8 @@ for (plyr in gameState.deckOfPlayers){
 
 function rollDice(){
   const dieOne = Math.floor(Math.random()*7);
-  const dieTwo = Math.floor(Math.random()*7);
-  return {one:dieOne, two:dieTwo, total:(dieOne+dieTwo)};
+  //const dieTwo = Math.floor(Math.random()*7);
+  return {value:dieOne};
 }
 
 function firstAndSecondRoundTurn(player){
