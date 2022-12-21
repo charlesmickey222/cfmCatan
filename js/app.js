@@ -26,9 +26,9 @@ const roadNames =    ['r1',
 'r9',  'r10','r11','r12','r13','r14','r15',   'r16',
 'r17','r18','r19','r20','r21','r22','r23','r24','r25',
       'r26','r27','r28','r29','r30','r31',
-      'r32','r33','r34','r35','r36','r37','r38',
+'r32','r33','r34','r35','r36','r37','r38',
     'r39' ,'r40','r41','r42','r43','r44','r45', 'r46',
- 'r47', 'r48','r49','r50','r51','r52','r53','r54', 'r55',
+'r47', 'r48','r49','r50','r51','r52','r53','r54', 'r55',
                    'r56','r57',
                 'r58','r59','r60']
 const vrtxNames = ['v1','v2',  
@@ -64,7 +64,7 @@ class Player{
     this.settlements=0; //-number of settlements players hold, 5 @ start
     this.cities=0; //-number of cities player holds,  4 added @ start
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
-    this.victoryPoints=0; //-number of VP player has, 10 to win, 0 at start
+    this.victoryPoints=0; //-number of VP player has, 7 to win, 0 at start
     this.diceRoll={};
   }
   setDiceRoll(obj){
@@ -98,24 +98,37 @@ class PlayerDeck {
 
 //general card class to create a deck holding every kind of card
 class Cards{
-  constructor(cardType){
-    this.cardType = cardType;
+  constructor(grantsVP){
+    this.grantsVp = grantsVP;
   }
 }
 class ResourceCards extends Cards{
   constructor(){
+    super(false);
     this.resourceTypes = ['wood','ore','grain','sheep','brick'];
     this.resource = '';
-    this.quantity = 65; //13 for each type of resource
+    this.count = 13; //amount of for each type of resource
     this.deck = [];
   }
-  populateResourceCardDeck(){
-
+  initResourceDeck(){
+    let temp = [];
+    let n = 0;
+    do{
+      temp.push([])
+      for (let i=0; i<this.count;i++){
+        temp[n].push(this.resourceTypes[n]);
+      }
+      n++;
+    }while(n < this.resourceTypes.length)
+    this.deck = temp;
   }
 }
 class DevelopmentCards extends Cards{
     constructor (){
       this.grantsVP = false;
+    }
+    initDevCards(){
+      return;
     }
 }
 class KnightCard extends DevelopmentCards{
@@ -153,6 +166,7 @@ class VpCards extends DevelopmentCards{
 class SpecialCards extends Cards{
   constructor(){
     //longest road or biggest army
+    //icebox goal
   }
 }
 class Board{
@@ -291,7 +305,7 @@ function tradeByPort(){
 
 function robberRolled(){
 moveDomeMaster();
- thunderDome();
+thunderDome();
 }
 
 function moveDomeMaster(){
