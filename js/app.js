@@ -20,6 +20,29 @@ const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //arra
 const numTileList = [ 'DOME','A','B','C','D','E','F','G','H','I','J','K','L']; //made into object list later
 const longestRoadReq = 5;
 const largestArmyReq = 3;
+const roadNames =    ['r1', 
+                  'r2',  'r3',
+    'r4',        'r5','r6','r7',           'r8',
+'r9',  'r10','r11','r12','r13','r14','r15',   'r16',
+'r17','r18','r19','r20','r21','r22','r23','r24','r25',
+      'r26','r27','r28','r29','r30','r31',
+      'r32','r33','r34','r35','r36','r37','r38',
+    'r39' ,'r40','r41','r42','r43','r44','r45', 'r46',
+ 'r47', 'r48','r49','r50','r51','r52','r53','r54', 'r55',
+                   'r56','r57',
+                'r58','r59','r60']
+const vrtxNames = ['v1','v2',  
+                'v3',    'v4', 
+  'v5', 'v6',    'v7',  'v8',     'v9', 'v10',
+'v11',   'v12','v13',    'v14', 'v15',      'v16',
+ 'v17', 'v18',   'v19', 'v20',    'v21', 'v22',
+         'v23','v24',   'v25', 'v26',
+  'v27','v28',   'v29',   'v30', 'v31', 'v32',    
+  'v33', 'v34', 'v35',   'v36', 'v37',   'v38',
+ 'v39',  'v40',  'v41', 'v42',   'v43', 'v44',
+                'v45',    'v46',
+                  'v47','v48',]
+const vertexInfo = {};
 //--variables--//
 let playerNames = [];
 const gameState ={
