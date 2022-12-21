@@ -48,6 +48,7 @@ let playerNames = [];
 const gameState ={
   roundCount: 0, //the count of how many rounds have been played
   turnCount: 1,// how many turns through round have been played
+  playing:false,
   leaderboard:[],// array of playerName strings sorted by VP, 
   deckOfPlayers:null,
   cardDeck:{resources:[],
@@ -74,6 +75,22 @@ class Player{
   setPlayerNum(num){
     this.playerNum = num;
   }
+  viewHand(){
+    this.hand.reduce(function(prev, el){
+    },{})
+  }
+  canAffordRoad(){
+
+  }
+  canAffordSettlement(){
+
+  }
+  canAffordCity(){
+
+  }
+  canAffordCard(){
+
+  }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
 class PlayerDeck {
@@ -83,7 +100,7 @@ class PlayerDeck {
   }
   populateRoster(){
     this.roster = this.roster.map(function(player, idx){
-        let newPlayer = new Player(player, idx, []);
+        let newPlayer = new Player(player, idx, [[/* resource cards */],[/* other cards */]]);
         newPlayer.settlements = 5;
         newPlayer.cities = 4;
         newPlayer.roadsHeld = 15;
@@ -104,13 +121,14 @@ class PlayerDeck {
 
 //general card class to create a deck holding every kind of card
 class Cards{
-  constructor(grantsVP){
+  constructor(grantsVP, cardType){
     this.grantsVp = grantsVP;
+    this.cardType = cardType;
   }
 }
 class ResourceCards extends Cards{
   constructor(){
-    super(false);
+    super(false, 'resource');
     this.resourceTypes = ['wood','ore','grain','sheep','brick'];
     this.resource = '';
     this.count = 13; //amount of for each type of resource
@@ -131,7 +149,7 @@ class ResourceCards extends Cards{
 }
 class DevelopmentCards extends Cards{
     constructor (){
-      super(false);
+      super(false, 'development');
     }
     initDevCards(){
       return;
@@ -161,10 +179,9 @@ class RoadBuilding extends DevelopmentCards{
     this.quantity = 2;
   }
 }
-class VpCards extends DevelopmentCards{
+class VpCards extends Cards{
   constructor(){
-      super(false);
-      this.grantsVp =true;
+      super(true, 'victoryPoint');
       //array for names of development cards that grant 1 Victory Point
       this.deck =['great hall','library','market','chapel','university'];
   }
@@ -281,6 +298,13 @@ function takeTurn(player){
   //roll dice, corresponding resources given to all players
   //  if seven move robber, rob peer
   //until player clicks end turn or completes all possible moves, gameplay options will be displayed
+  if (gameState.turnCount <=2){
+    firstAndSecondRoundTurn(player);
+  }else{
+    do{
+
+    }while(gameState.playing === true)
+  }
 }
 
 function placeRoad(){
