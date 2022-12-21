@@ -1,8 +1,25 @@
+
+/*  ASCII BOARD
+>           __
+>         / A4 \
+> __      \ __ /      __
+/ F4 \ __ / G5 \ __ / B2 \
+\ __ / L5 \ __ / H5 \ __ /
+>    \ __ / TD \ __ /
+> __ / K3 \ __ / I4 \ __
+/ E6 \ __ / J6 \ __ / C5 \
+\ __ /    \ __ /    \ __ /
+>         / D3 \
+>         \ __ /
+>
+*/
+
 //--constants--//
 const colorOptions = ['Bone','Blood']//options that player has for colors
 const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
-const numTileList = ['A','B','C','D','E','F','G','H','I','J','K','L']; //made into object list later
-const longestRoadReq = 
+const numTileList = [ 'DOME','A','B','C','D','E','F','G','H','I','J','K','L']; //made into object list later
+const longestRoadReq = 5;
+const largestArmyReq = 3;
 //--variables--//
 let playerNames = [];
 const gameState ={
@@ -49,23 +66,28 @@ class PlayerDeck {
   getRoster(){
     return this.roster;
   }
-}
+  sortByRoll(){
+    this.roster.sort((a,b) =>{
+      return a.diceRoll - b.diceRoll;
+    })
+  }
+  }
 
 //general card class to create a deck holding every kind of card
 class Cards{
   constructor(cardType){
     this.cardType = cardType;
   }
-  
-  buildDeck(){
-
-  }
 }
 class ResourceCards extends Cards{
   constructor(){
     this.resourceTypes = ['wood','ore','grain','sheep','brick'];
     this.resource = '';
-    this.quantity = 95; //19 for each type of resource
+    this.quantity = 65; //13 for each type of resource
+    this.deck = [];
+  }
+  populateResourceCardDeck(){
+
   }
 }
 class DevelopmentCards extends Cards{
@@ -135,9 +157,12 @@ function makeChips(){
         }else if (letter === 'C' || letter === 'G'|| letter === 'H'|| letter === 'L'){
             return {letter: letter, number: 5, dots:'....',};
         }else if (letter === 'E' || letter === 'J'){
-          return {letter: letter, number: 8, dots:'.....',};
+          return {letter: letter, number: 6, dots:'..',};
+        }else if (letter === 'DOME'){
+          return {letter: letter, number: 1, dots:'.',};
         }
       })
+      return arr;
 }  
 
 //--cached element references--//
@@ -173,19 +198,23 @@ function startGame(){
 }
 
 function changeTurn(){
-  //
-  //if it is last player in deck's turn, changeRound
-  //set activePlayer to nextPlayer in deck
+  //set activePlayer to next Player in deck
 }
 
 function changeRound(){
-// add to round count,
+gameState.roundCount++;
+gameState.turnCount = 0;
 }
 //game play functions
 function rollForTurns(){
 for (plyr in gameState.deckOfPlayers){
   object.setDiceRoll(rollDice());
-} 
+}
+if(gameState.deckOfPlayers.roster[0].diceRoll === gameState.deckOfPlayers.roster[1].diceRoll){
+  rollForTurns();
+}else{
+  gameState.deckOfPlayers.sortByRoll();
+}
 }
 
 function rollDice(){
@@ -238,8 +267,8 @@ function tradeByPort(){
 }
 
 function robberRolled(){
-moveRobber();
-robPeer();
+moveDomeMaster();
+ thunderDome();
 }
 
 function moveDomeMaster(){
@@ -250,18 +279,3 @@ function moveDomeMaster(){
 function thunderDome(){
 // combat >8}
 }
-
-/*  ASCII BOARD
-            __
-          / A4 \
-  __      \ __ /      __
-/ F4 \ __ / G5 \ __ / B2 \
-\ __ / L5 \ __ / H5 \ __ /
-     \ __ / TD \ __ /
-  __ / K3 \ __ / I4 \ __
-/ E6 \ __ / J6 \ __ / C5 \
-\ __ /    \ __ /    \ __ /
-          / D3 \
-          \ __ /
-
-*/
