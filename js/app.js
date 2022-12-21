@@ -75,7 +75,7 @@ class Player{
     this.playerNum = num;
   }
 }
-//creates and stores objects of classs Player in a object for functions of the game to iterate through.
+  //creates and stores objects of classs Player in a object for functions of the game to iterate through.
 class PlayerDeck {
   constructor(numPlayers){
     this.numPlayers = numPlayers;
@@ -131,7 +131,7 @@ class ResourceCards extends Cards{
 }
 class DevelopmentCards extends Cards{
     constructor (){
-      this.grantsVP = false;
+      super(false);
     }
     initDevCards(){
       return;
@@ -162,11 +162,11 @@ class RoadBuilding extends DevelopmentCards{
   }
 }
 class VpCards extends DevelopmentCards{
-  constructor(vpCardType){
-      this.vpCardType = vpCardType;
-      this.grantsVP = true;
+  constructor(){
+      super(false);
+      this.grantsVp =true;
       //array for names of development cards that grant 1 Victory Point
-      this.vpCardNames =['great hall','library','market','chapel','university'];
+      this.deck =['great hall','library','market','chapel','university'];
   }
 }
 class SpecialCards extends Cards{
@@ -177,7 +177,8 @@ class SpecialCards extends Cards{
 }
 class Board{
   constructor(){
-
+    this.roads = roadNames;
+    this.vertices = vrtxNames;
   }
 }
 
@@ -213,13 +214,18 @@ function makeChips(){
 //--event listeners--//
 
 //--functions--//
-//initialization functions
+            //initialization functions
 function init(){
   gameState.deckOfPlayers = new PlayerDeck(4);
   gameState.deckOfPlayers.populateRoster();
+  const rDeck = new ResourceCards();
+  rDeck.initResourceDeck();
+  const vpDeck = new VpCards();
+  gameState.cardDeck.resources = rDeck;
+  gameState.cardDeck.development = vpDeck;
 
 }
-//render functions
+            //render functions
 function render(){
   renderBoard();
 }
@@ -235,7 +241,7 @@ function renderTurnCard(){
 function buildPlayerCards(){
 //
 }
-//game state functions
+            //game state functions
 function startGame(){
   rollForTurns()
 }
@@ -248,7 +254,7 @@ function changeRound(){
 gameState.roundCount++;
 gameState.turnCount = 0;
 }
-//game play functions
+            //game play functions
 
 function rollForTurns(){
 for (plyr in gameState.deckOfPlayers){
@@ -272,9 +278,9 @@ function firstAndSecondRoundTurn(player){
 }
 
 function takeTurn(player){
-//roll dice, corresponding resources given to all players
-//  if seven move robber, rob peer
-//until player clicks end turn or completes all possible moves, gameplay options will be displayed
+  //roll dice, corresponding resources given to all players
+  //  if seven move robber, rob peer
+  //until player clicks end turn or completes all possible moves, gameplay options will be displayed
 }
 
 function placeRoad(){
@@ -316,8 +322,8 @@ thunderDome();
 }
 
 function moveDomeMaster(){
-//place thunder dome games master in chosen tile
-//set tiles number tile value to 0 temporarily
+  //place thunder dome games master in chosen tile
+  //set tiles number tile value to 0 temporarily
 }
 
 function thunderDome(){
