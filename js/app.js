@@ -47,11 +47,12 @@ const vertexInfo = {};
 let playerNames = [];
 const gameState ={
   roundCount: 0, //the count of how many rounds have been played
-  turnCount: 0,// how many turns through round have been played
+  turnCount: 1,// how many turns through round have been played
   leaderboard:[],// array of playerName strings sorted by VP, 
   deckOfPlayers:null,
-  devCardDeck:null,
-  activePlayer:null,
+  cardDeck:{resources:[],
+  development:[],
+  other:[],},
 }
 
 
@@ -69,6 +70,9 @@ class Player{
   }
   setDiceRoll(obj){
     this.diceRoll = obj;
+  }
+  setPlayerNum(num){
+    this.playerNum = num;
   }
 }
 //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -93,6 +97,8 @@ class PlayerDeck {
     this.roster.sort((a,b) =>{
       return a.diceRoll - b.diceRoll;
     })
+    this.roster[0].setPlayerNum[1];
+    this.roster[1].setPlayerNum[-1];
   }
   }
 
@@ -243,6 +249,7 @@ gameState.roundCount++;
 gameState.turnCount = 0;
 }
 //game play functions
+
 function rollForTurns(){
 for (plyr in gameState.deckOfPlayers){
   object.setDiceRoll(rollDice());
