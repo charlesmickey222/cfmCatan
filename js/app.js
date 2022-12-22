@@ -203,6 +203,7 @@ const vertexInfo = vrtxNames.map((vrtx,index)=>{
       roadsNear:vrtxRoadList[index],
       neighbors:vrtxNeighborList[index],
       occupied:false,
+      yield:1,
     }
 })
 const roadInfo = roadNames.map((road,index)=>{
@@ -217,12 +218,13 @@ class Player{
     this.hand = hand; //cards[#of card types(development, vp, resources)];
     this.playerName = playerName;
     this.playerNum =  playerNum;
-    this.settlements=0; //-number of settlements players hold, 5 @ start
-    this.cities=0; //-number of cities player holds,  4 added @ start
+    this.settlementsHeld=0; //-number of settlements players hold, 5 @ start
+    this.citiesHeld=0; //-number of cities player holds,  4 added @ start
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 7 to win, 0 at start
     this.dieRoll=0;
     this.settlementVertices=[];
+    this.cityVertices=[];
     this.roadPlacements=[];
     this.resourcesHeld ={
       wood:0,
@@ -236,13 +238,13 @@ class Player{
     this.playerNum = num;
   }
   canAffordRoad(){
-    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
+    return (this.resourcesHeld['wood'] >= 1 && this.resourcesHeld['brick'] >= 1);
   }
   canAffordSettlement(){
-    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1 && this.resourcesHeld[sheep] >= 1 && this.resourcesHeld[grain] >= 1);
+    return (this.resourcesHeld['wood'] >= 1 && this.resourcesHeld['brick'] >= 1 && this.resourcesHeld['sheep'] >= 1 && this.resourcesHeld['grain'] >= 1);
   }
   canAffordCity(){
-    return (this.resourcesHeld[ore] >= 3 && this.resourcesHeld[grain] >= 2);
+    return (this.resourcesHeld['ore'] >= 3 && this.resourcesHeld['grain'] >= 2);
   }
   canAffordCard(){
     return (this.resourcesHeld[sheep] >= 1 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
@@ -251,9 +253,14 @@ class Player{
     const die = Math.floor(Math.random()*6) +1;
     this.dieRoll = die;
   }
+  acquireResource(resource,quantity){
+    this.resourcesHeld[resource] = this.resourcesHeld[resource] + quantity;
+  }
   buyRoad(location){
     if(this.canAffordRoad()){
       this.placeRoad(location);
+      this.resourcesHeld.wood--;
+      this.resourcesHeld.brick--;
     }
   }
   placeRoad(location){
@@ -263,20 +270,25 @@ class Player{
     else{
       this.roadPlacements.push(roadInfo[location].name)
       roadInfo[location].isBuilt = true;
+      this.roadsHeld--;
     }
   }
   placeSettlement(location){
-    //check player resources
-    //display message for insuffficieint resources
-    //allow placement on unoccupied, spaced out vertice
+    if (vertexInfo[location].occupied){
+      console.log('occupied')
+    }
+    else{
+      this.settlementVertices.push(vertexInfo[location].name)
+      roadInfo[location].isBuilt = true;
+      this.settlementsHeld--;
+    }
   }
   placeCity(location){
-    //check player resources
-    //display message for insuffficieint resources
-    //if sufficient resources find desired placement
-    //allow placement on vertice occupied by player's own settlement
-    //remove settlement
-    //place city
+    if (this.settlementVertices.some(vertex => {return vertex === vertexInfo[location].name})){
+      if (this.canAffordCity){
+        
+      }
+    }
   }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -480,6 +492,15 @@ function takeTurn(player){
 
     }while(gameState.playing === true)
   }
+}
+
+function checkIfHarvest(currentRoll){
+let keyVerts = [];
+tileInfo.forEach(tile => {
+  if (tile.rollValue === currentRoll){
+    keyVerts.concat(tile.vertices);
+  }
+})
 }
 
 function roadInquiry(){
