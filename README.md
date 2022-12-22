@@ -1,2 +1,2 @@
 # cfmCatan
-Settlers of Catan clone in html/css/javascript
+## a semi original board game!

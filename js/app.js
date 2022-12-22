@@ -118,6 +118,56 @@ const vrtxRoadList = [
   ['r58','r59'],
   ['r59','r60'],
 ];
+const vrtxNeighborList = [
+  ['v2','v3'],
+  ['v1','v4',],
+  ['v1','v1'],
+  ['rv2','v8'],
+  ['v6','v11'],
+  ['v5','v12'],
+  ['v3','v8','v13'],
+  ['v7','v4','v11'],
+  ['v10','v15'],
+  ['v9','v16'],
+  ['v5','v17'],
+  ['v6','v13','v18'],
+  ['v4','v12','v19'],
+  ['v8','v25','v20'],
+  ['v9','v14','v21'],
+  ['v10','v22'],
+  ['v11','v18'],
+  ['v12','v17','v23'],
+  ['v13','v20','v24'],
+  ['v14','v19','v25'],
+  ['v15','v22','v26'],
+  ['v16','v21'],
+  ['v18','v28','v24'],
+  ['v23','v19','v29'],
+  ['v20','v26','v30'],
+  ['v21','v25','v30'],
+  ['v28','v33'],
+  ['v23','v27','v34'],
+  ['v24','v30','v35'],
+  ['v25','v29','v36'],
+  ['v26','v32','v37'],
+  ['v31','v38'],
+  ['v27','v39'],
+  ['v28','v35','v40'],
+  ['v39','v34','v41'],
+  ['v30','v37','v42'],
+  ['v31','v36','v43'],
+  ['v32','v44'],
+  ['v33','v40'],
+  ['v39','v34'],
+  ['v35','v42','v45'],
+  ['v36','v41','v46'],
+  ['v37','v44'],
+  ['v38','v43'],
+  ['v41','v47'],
+  ['v42','v48'],
+  ['v45','v48'],
+  ['v46','v47'],
+];
 const boardList =['t1',
           't2',   't3',    't4', 
               't5',   't6',    
@@ -147,7 +197,12 @@ const tileInfo = boardList.map((tile, index) =>{
 })
 const vertexInfo = vrtxNames.map((vrtx,index)=>{
     return {name:vrtx, 
-      roadsNear:vrtxRoadList[index]
+      roadsNear:vrtxRoadList[index],
+      neighbors: vrtxNeighborList[index],
+      state:{
+        occupied:false,
+        occupier: null,
+        },
     }
 })
 
@@ -374,6 +429,7 @@ plyrRstr.forEach(plyr =>{
   plyr.rollDice();
   })
 if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[1].dieRoll){
+  console.log('tied roll again');
   rollForTurns();
   return;
 }else{
@@ -382,13 +438,14 @@ if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[
 }
 
 function firstAndSecondRoundTurn(player){
-//place one settlement and two roads
+//place one settlement and one road
 }
 
 function takeTurn(player){
   //roll dice, corresponding resources given to all players
   //  if seven move robber, rob peer
   //until player clicks end turn or completes all possible moves, gameplay options will be displayed
+  player.rollDice();
   if (gameState.turnCount <=2){
     firstAndSecondRoundTurn(player);
   }else{
@@ -398,6 +455,10 @@ function takeTurn(player){
   }
 }
 
+function roadInquiry(){
+  //asks for desired road placement
+  //alert player if road is taken
+}
 function placeRoad(){
   //check player resources
   //find desired placement
