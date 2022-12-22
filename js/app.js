@@ -36,14 +36,16 @@ const gameState ={
   cardDeck:{resources:[],
   development:[],
   other:[],},
+  currentRoll:null,
 }
 
 //--constants--//
 const colorOptions = ['Bone','Blood']//options that player has for colors
-const  devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
-const numTileList = [ 'DOME','A','B','C','D','E','F','G','H','I','J','K','L']; //made into object list later
-const longestRoadReq = 5;
-const largestArmyReq = 3;
+const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
+const resourceNames = ['wood','ore','grain','sheep','brick'];
+const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
+//const longestRoadReq = 5; iced
+//const largestArmyReq = 3; iced
 const roadNames =    ['r1', 
                   'r2',  'r3',
     'r4',        'r5','r6','r7',           'r8',
@@ -100,6 +102,13 @@ class Player{
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 7 to win, 0 at start
     this.diceRoll={};
+    this.resourcesHeld ={
+      wood:0,
+      ore:0,
+      sheep:0,
+      brick:0,
+      grain:0
+    }
   }
   setDiceRoll(obj){
     this.diceRoll = obj;
@@ -107,29 +116,20 @@ class Player{
   setPlayerNum(num){
     this.playerNum = num;
   }
-  getResources(){
-    this.hand[0].reduce(function(prev, el){
-      if(prev[el]){
-        prev[el].count++;
-      }else{
-        prev[el]={
-          resource:`${el.cardType}`,
-          count: 1,
-        }
-      }
-    },{})
-  }
   canAffordRoad(){
-
+    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
   }
   canAffordSettlement(){
-
+    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
   }
   canAffordCity(){
-
+    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
   }
   canAffordCard(){
-
+    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
+  }
+  rollDice(){
+    
   }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -140,7 +140,7 @@ class PlayerDeck {
   }
   populateRoster(){
     this.roster = this.roster.map(function(player, idx){
-        let newPlayer = new Player(player, idx, [[/* resource cards */],[/* other cards */]]);
+        let newPlayer = new Player(player, idx, [/*vp&devCards*/]);
         newPlayer.settlements = 5;
         newPlayer.cities = 4;
         newPlayer.roadsHeld = 15;
@@ -176,7 +176,6 @@ class VpCards extends Cards{
 class ResourceCards extends Cards{
   constructor(){
     super(false, 'resource');
-    this.resourceTypes = ['wood','ore','grain','sheep','brick'];
     this.resource = '';
     this.count = 13; //amount of for each type of resource
     this.deck = [];
@@ -187,10 +186,10 @@ class ResourceCards extends Cards{
     do{
       temp.push([])
       for (let i=0; i<this.count;i++){
-        temp[n].push(this.resourceTypes[n]);
+        temp[n].push(resourceTypes[n]);
       }
       n++;
-    }while(n < this.resourceTypes.length)
+    }while(n < resourceTypes.length)
     this.deck = temp;
   }
 }
@@ -242,9 +241,12 @@ class Board{
 class BoardTile{
   constructor(tileType){
     this.tileType = tileType;
-    this.resourceNames = ['wood','ore','grain','sheep','brick'];
     this.tileNames = ['forest','mountain','fields', 'pasture','hill'];
-    
+    this.verticesTouching = [];
+    this.roadsTouching = [];
+  }
+  initTiles(){
+
   }
 }
 
@@ -273,15 +275,13 @@ function makeChips(){
 //--functions--//
             //initialization functions
 function init(){
-  gameState.deckOfPlayers = new PlayerDeck(4);
+  gameState.deckOfPlayers = new PlayerDeck(2);
   gameState.deckOfPlayers.populateRoster();
   const rDeck = new ResourceCards();
   rDeck.initResourceDeck();
   const vpDeck = new VpCards();
   gameState.cardDeck.resources = rDeck;
   gameState.cardDeck.development = vpDeck;
-  rollForTurns();
-
 }
             //render functions
 function render(){
@@ -297,7 +297,7 @@ function renderTurnCard(){
 }
             //game state functions
 function startGame(){
-  rollForTurns();
+  rollForTurns(gameState.deckOfPlayers.roster);
 }
 
 function changeTurn(){
@@ -310,10 +310,10 @@ gameState.turnCount = 1;
 }
             //game play functions
 
-function rollForTurns(){
-for (plyr in gameState.deckOfPlayers){
-  object.setDiceRoll(rollDice());
-}
+function rollForTurns(plyrRstr){
+gameState.deckOfPlayers.roster.forEach(plyr =>{
+  plyr.setDiceRoll(rollDice());
+})
 if(gameState.deckOfPlayers.roster[0].diceRoll === gameState.deckOfPlayers.roster[1].diceRoll){
   rollForTurns();
   return;
