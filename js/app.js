@@ -38,12 +38,12 @@ const gameState ={
   other:[],},
   currentRoll:null,
 }
-
 //--constants--//
 const colorOptions = ['Bone','Blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const resourceNames = ['wood','ore','grain','sheep','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
+const tileRollValues = [4,4,5,2,5,5,1,3,4,6,6,5,3];
 //const longestRoadReq = 5; iced
 //const largestArmyReq = 3; iced
 const roadNames =    ['r1', 
@@ -68,7 +68,56 @@ const vrtxNames = ['v1','v2',
   'v39','v40',   'v41', 'v42',   'v43', 'v44',
                 'v45',    'v46',
                   'v47','v48',];
-
+const vrtxRoadList = [
+  ['r1','r2'],
+  ['r1','r3',],
+  ['r2','r5'],
+  ['r3','r7'],
+  ['r4','r9'],
+  ['r4','r10'],
+  ['r5','r6','r12'],
+  ['r6','r7','r12'],
+  ['r8','r15'],
+  ['r8','r16'],
+  ['r9','r17'],
+  ['r10','r12','r19'],
+  ['r11','r12','r20'],
+  ['r13','r14','r20'],
+  ['r14','r15','r23'],
+  ['r16','r25'],
+  ['r17','r28'],
+  ['r18','r19','r26'],
+  ['r20','r21','r28'],
+  ['r21','r22','r29'],
+  ['r23','r24','r21'],
+  ['r24','r25'],
+  ['r26','r27','r33'],
+  ['r27','r28','r34'],
+  ['r29','r29','r35'],
+  ['r30','r31','r37'],
+  ['r32','r38'],
+  ['r31','r32','r40'],
+  ['r34','r35','r42'],
+  ['r35','r36','r43'],
+  ['r37','r38','r45'],
+  ['r38','r46'],
+  ['r39','r47'],
+  ['r40','r41','r49'],
+  ['r41','r42','r50'],
+  ['r43','r44','r50'],
+  ['r44','r45','r53'],
+  ['r46','r55'],
+  ['r47','r48'],
+  ['r48','r49'],
+  ['r50','r51','r56'],
+  ['r51','r52','r57'],
+  ['r53','r54'],
+  ['r54','r55'],
+  ['r56','r58'],
+  ['r57','r60'],
+  ['r58','r59'],
+  ['r59','r60'],
+];
 const boardList =['t1',
           't2',   't3',    't4', 
               't5',   't6',    
@@ -83,14 +132,25 @@ const tileVertexList = [
   ['v9','v10','v15','v16','v21','v22'],
   ['v12','v13','v18','v19','v23','v24'],
   ['v14','v15','v20','v21','v25','v26'],
-  ['v19','v20','v24','v25','v29','v30',],
+  ['v19','v20','v24','v25','v29','v30'],
   ['v23','v24','v28','v29','v34','v35'],
   ['v25','v26','v30','v31','v36','v37'],
   ['v27','v28','v33','v34','v39','v40'],
   ['v29','v30','v35','v36','v41','v42'],
   ['v31','v32','v37','v38','v43','v44'],
   ['v41','v42','v45','v46','v47','v48']
-]
+];
+const tileInfo = boardList.map((tile, index) =>{
+  return {name:tile,
+    rollValue:tileRollValues[index],
+    vertices:tileVertexList[index],}
+})
+const vertexInfo = vrtxNames.map((vrtx,index)=>{
+    return {name:vrtx, 
+      roadsNear:vrtxRoadList[index]
+    }
+})
+
 //--classes--//
 class Player{
   constructor (playerName, playerNum,hand){
@@ -120,13 +180,13 @@ class Player{
     return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
   }
   canAffordSettlement(){
-    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
+    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1 && this.resourcesHeld[sheep] >= 1 && this.resourcesHeld[grain] >= 1);
   }
   canAffordCity(){
-    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
+    return (this.resourcesHeld[ore] >= 3 && this.resourcesHeld[grain] >= 2);
   }
   canAffordCard(){
-    return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
+    return (this.resourcesHeld[sheep] >= 1 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
   }
   rollDice(){
     const die = Math.floor(Math.random()*6) +1;
@@ -243,8 +303,6 @@ class BoardTile{
   constructor(tileType){
     this.tileType = tileType;
     this.tileNames = ['forest','mountain','fields', 'pasture','hill'];
-    this.verticesTouching = [];
-    this.roadsTouching = [];
   }
   initTiles(){
 
