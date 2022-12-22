@@ -220,9 +220,9 @@ class Player{
     this.playerName = playerName;
     this.playerNum =  playerNum;
     this.active = false;
-    this.settlementsHeld=0; //-number of settlements players hold, 5 @ start
-    this.citiesHeld=0; //-number of cities player holds,  4 added @ start
-    this.roadsHeld=0; //-number of roads player holds, 15 added @ start
+    this.settlementsHeld=5; //-number of settlements players hold, 5 @ start
+    this.citiesHeld=4; //-number of cities player holds,  4 added @ start
+    this.roadsHeld=15; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 7 to win, 0 at start
     this.dieRoll=0;
     this.settlementVertices=[];
@@ -524,21 +524,23 @@ function checkIfHarvest(currentRoll){
 let keyTiles = [];
 tileInfo.forEach(tile => {
   if (tile.rollValue === currentRoll){
-    keyVerts.push({resource:tile.resource, v:tile.vertices});
+    keyTiles.push({resource:tile.resource, vList:tile.vertices});
   }
 })
 gameState.deckOfPlayers.roster.forEach(player =>{
   player.settlementVertices.forEach(vertex =>{
-    if (keyTiles.some(element => {return element.vertices.includes(vertex)})){
-      player.acquireResource(element.resource, 1);
-    }
+    keyTiles.forEach(tile => {
+      if (tile.vList.includes(vertex)){
+        player.acquireResource(tile.resource, 1);
+      }
+    })
   })
-})
-gameState.deckOfPlayers.roster.forEach(player =>{
   player.cityVertices.forEach(vertex =>{
-    if (keyTiles.some(element => {return element.vertices.includes(vertex)})){
-      player.acquireResource(element.resource, 2);
-    }
+    keyTiles.forEach(tile => {
+      if (tile.vList.includes(vertex)){
+        player.acquireResource(tile.resource, 1);
+      }
+    })
   })
 })
 }
@@ -576,4 +578,15 @@ function moveDomeMaster(){
 
 function thunderDome(){
 // combat >8}
+}
+
+function test(){
+  init()
+  startGame()
+  gameState.deckOfPlayers.roster[0].acquireResource('wood',1);
+  gameState.deckOfPlayers.roster[0].acquireResource('grain',1);
+  gameState.deckOfPlayers.roster[0].acquireResource('brick',1);
+  gameState.deckOfPlayers.roster[0].acquireResource('sheep',1);
+  gameState.deckOfPlayers.roster[0].placeSettlement(1);
+  checkIfHarvest(4);
 }
