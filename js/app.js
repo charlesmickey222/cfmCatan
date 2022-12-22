@@ -101,7 +101,7 @@ class Player{
     this.cities=0; //-number of cities player holds,  4 added @ start
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 7 to win, 0 at start
-    this.diceRoll={};
+    this.dieRoll=0;
     this.resourcesHeld ={
       wood:0,
       ore:0,
@@ -110,8 +110,8 @@ class Player{
       grain:0
     }
   }
-  setDiceRoll(obj){
-    this.diceRoll = obj;
+  setdieRoll(obj){
+    this.dieRoll = obj;
   }
   setPlayerNum(num){
     this.playerNum = num;
@@ -129,7 +129,8 @@ class Player{
     return (this.resourcesHeld[wood] >= 1 && this.resourcesHeld[brick] >= 1);
   }
   rollDice(){
-    
+    const die = Math.floor(Math.random()*6) +1;
+    this.dieRoll = die;
   }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -152,7 +153,7 @@ class PlayerDeck {
   }
   sortByRoll(){
     this.roster.sort((a,b) =>{
-      return a.diceRoll - b.diceRoll;
+      return b.dieRoll - a.dieRoll;
     })
     this.roster[0].setPlayerNum[1];
     this.roster[1].setPlayerNum[-1];
@@ -186,10 +187,10 @@ class ResourceCards extends Cards{
     do{
       temp.push([])
       for (let i=0; i<this.count;i++){
-        temp[n].push(resourceTypes[n]);
+        temp[n].push(resourceNames[n]);
       }
       n++;
-    }while(n < resourceTypes.length)
+    }while(n < resourceNames.length)
     this.deck = temp;
   }
 }
@@ -311,21 +312,15 @@ gameState.turnCount = 1;
             //game play functions
 
 function rollForTurns(plyrRstr){
-gameState.deckOfPlayers.roster.forEach(plyr =>{
-  plyr.setDiceRoll(rollDice());
-})
-if(gameState.deckOfPlayers.roster[0].diceRoll === gameState.deckOfPlayers.roster[1].diceRoll){
+plyrRstr.forEach(plyr =>{
+  plyr.rollDice();
+  })
+if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[1].dieRoll){
   rollForTurns();
   return;
 }else{
   gameState.deckOfPlayers.sortByRoll();
-}
-}
-
-function rollDice(){
-  const dieOne = Math.floor(Math.random()*7);
-  //const dieTwo = Math.floor(Math.random()*7);
-  return {value:dieOne};
+  }
 }
 
 function firstAndSecondRoundTurn(player){
