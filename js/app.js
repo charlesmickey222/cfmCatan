@@ -204,6 +204,7 @@ const vertexInfo = vrtxNames.map((vrtx,index)=>{
       neighbors:vrtxNeighborList[index],
       occupied:false,
       yield:1,
+      isValid:true,
     }
 })
 const roadInfo = roadNames.map((road,index)=>{
@@ -277,11 +278,11 @@ class Player{
   placeSettlement(location){
     if (vertexInfo[location].occupied){
       console.log('occupied')
-    }else if(){
+    }else if(hasNeighbors(location)){
 
     }else{
       this.settlementVertices.push(vertexInfo[location].name)
-      roadInfo[location].isBuilt = true;
+      vertexInfo[location].occupied = true;
       this.settlementsHeld--;
     }
   }
@@ -292,11 +293,16 @@ class Player{
       this.resourcesHeld.brick--;
     }
   }
+  buyCity(location){
+    if(this.canAffordCity){
+      this.placeCity(location)
+    }
+  }
   placeCity(location){
     if (this.settlementVertices.some(vertex => {return vertex === vertexInfo[location].name})){
-      if (this.canAffordCity){
-      
-      }
+      this.cityVertices.push(vrtxNames[location])
+      let temp = this.settlementVertices.indexOf(vrtxNames[location])
+      this.settlementVertices.splice(temp, 1);
     }
   }
 }
@@ -469,6 +475,17 @@ function changeRound(){
 gameState.roundCount++;
 gameState.turnCount = 1;
 }
+
+function hasNeighbors(location){
+  let suspect = vertexInfo[location];
+  let susNeighbors = suspect.neighbors;
+  let indicator = false;
+  susNeighbors.forEach(neighbor => {
+    let temp = vertexInfo.find(vertex => vertex.name === neighbor);
+    indicator = temp.occupied;
+  })
+  return indicator;
+}
             //game play functions
 
 function rollForTurns(plyrRstr){
@@ -494,7 +511,7 @@ function takeTurn(player){
   //  if seven move robber, rob peer
   //until player clicks end turn or completes all possible moves, gameplay options will be displayed
   player.rollDice();
-  if (gameState.turnCount <=2){
+  if (gameState.turnCount <= 2){
     firstAndSecondRoundTurn(player);
   }else{
     do{
