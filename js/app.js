@@ -122,8 +122,8 @@ const vrtxRoadList = [
 const vrtxNeighborList = [
   ['v2','v3'],
   ['v1','v4',],
-  ['v1','v1'],
-  ['rv2','v8'],
+  ['v1','v7'],
+  ['v2','v8'],
   ['v6','v11'],
   ['v5','v12'],
   ['v3','v8','v13'],
@@ -249,7 +249,7 @@ class Player{
     return (this.resourcesHeld['ore'] >= 3 && this.resourcesHeld['grain'] >= 2);
   }
   canAffordCard(){
-    return (this.resourcesHeld[sheep] >= 1 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
+    return (this.resourcesHeld[sheep] >= 2 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
   }
   rollDice(){
     const die = Math.floor(Math.random()*6) +1;
@@ -276,13 +276,19 @@ class Player{
     }
   }
   placeSettlement(location){
-    if (vertexInfo[location].occupied){
+    if (vertexInfo[location].occupied || vertexInfo[location].isValid === false){
       console.log('occupied')
-    }else if(hasNeighbors(location)){
-
-    }else{
+    }/*else if(hasNeighbors(location)){
+      console.log('not valid');
+    }
+    else*/{
       this.settlementVertices.push(vertexInfo[location].name)
       vertexInfo[location].occupied = true;
+      vertexInfo[location].isValid = false;
+      vertexInfo[location].neighbors.forEach(neighbor =>{
+        let idx = vertexInfo.findIndex(function(element){return element.name === neighbor})
+        vertexInfo[idx].isValid = false;
+      })
       this.settlementsHeld--;
     }
   }
@@ -482,7 +488,7 @@ function hasNeighbors(location){
   let indicator = false;
   susNeighbors.forEach(neighbor => {
     let temp = vertexInfo.find(vertex => vertex.name === neighbor);
-    indicator = temp.occupied;
+    indicator = !temp.isValid;
   })
   return indicator;
 }
@@ -494,7 +500,7 @@ plyrRstr.forEach(plyr =>{
   })
 if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[1].dieRoll){
   console.log('tied roll again');
-  rollForTurns();
+  rollForTurns(plyrRstr);
   return;
 }else{
   gameState.deckOfPlayers.sortByRoll();
@@ -520,7 +526,7 @@ function takeTurn(player){
   }
 }
 
-function checkIfHarvest(currentRoll){
+function harvest(currentRoll){
 let keyTiles = [];
 tileInfo.forEach(tile => {
   if (tile.rollValue === currentRoll){
@@ -583,10 +589,11 @@ function thunderDome(){
 function test(){
   init()
   startGame()
-  gameState.deckOfPlayers.roster[0].acquireResource('wood',1);
-  gameState.deckOfPlayers.roster[0].acquireResource('grain',1);
-  gameState.deckOfPlayers.roster[0].acquireResource('brick',1);
-  gameState.deckOfPlayers.roster[0].acquireResource('sheep',1);
   gameState.deckOfPlayers.roster[0].placeSettlement(1);
-  checkIfHarvest(4);
+  gameState.deckOfPlayers.roster[1].placeSettlement(10);
+  for(let i =1; i <7;i++){
+    harvest(i)
+    console.log(gameState.deckOfPlayers)
+  }
+
 }
