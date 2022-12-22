@@ -126,6 +126,13 @@ class Cards{
     this.cardType = cardType;
   }
 }
+class VpCards extends Cards{
+  constructor(){
+      super(true, 'victoryPoint');
+      //array for names of development cards that grant 1 Victory Point
+      this.deck =['great hall','library','market','chapel','university'];
+  }
+}
 class ResourceCards extends Cards{
   constructor(){
     super(false, 'resource');
@@ -155,12 +162,6 @@ class DevelopmentCards extends Cards{
       return;
     }
 }
-class KnightCard extends DevelopmentCards{
-    constructor(){
-      this.cardType = 'knight';
-      this.quantity = 14;
-    }
-}
 class Monopoly extends DevelopmentCards{
     constructor(){
       this.cardType = 'monopoly';
@@ -179,11 +180,10 @@ class RoadBuilding extends DevelopmentCards{
     this.quantity = 2;
   }
 }
-class VpCards extends Cards{
+class KnightCard extends DevelopmentCards{
   constructor(){
-      super(true, 'victoryPoint');
-      //array for names of development cards that grant 1 Victory Point
-      this.deck =['great hall','library','market','chapel','university'];
+    this.cardType = 'knight';
+    this.quantity = 14;
   }
 }
 class SpecialCards extends Cards{
@@ -254,22 +254,18 @@ function renderBoard(){
 function renderTurnCard(){
 //render the acive player's options for their turn
 }
-
-function buildPlayerCards(){
-//
-}
             //game state functions
 function startGame(){
-  rollForTurns()
+  rollForTurns();
 }
 
 function changeTurn(){
-  //set activePlayer to next Player in deck
+  gameState.turnCount *= -1;
 }
 
 function changeRound(){
 gameState.roundCount++;
-gameState.turnCount = 0;
+gameState.turnCount = 1;
 }
             //game play functions
 
