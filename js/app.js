@@ -521,13 +521,28 @@ function takeTurn(player){
 }
 
 function checkIfHarvest(currentRoll){
-let keyVerts = [];
+let keyTiles = [];
 tileInfo.forEach(tile => {
   if (tile.rollValue === currentRoll){
-    keyVerts.concat(tile.vertices);
+    keyVerts.push({resource:tile.resource, v:tile.vertices});
   }
 })
+gameState.deckOfPlayers.roster.forEach(player =>{
+  player.settlementVertices.forEach(vertex =>{
+    if (keyTiles.some(element => {return element.vertices.includes(vertex)})){
+      player.acquireResource(element.resource, 1);
+    }
+  })
+})
+gameState.deckOfPlayers.roster.forEach(player =>{
+  player.cityVertices.forEach(vertex =>{
+    if (keyTiles.some(element => {return element.vertices.includes(vertex)})){
+      player.acquireResource(element.resource, 2);
+    }
+  })
+})
 }
+
 function roadInquiry(){
   return '0';
 }
