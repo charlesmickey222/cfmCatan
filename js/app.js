@@ -205,6 +205,11 @@ const vertexInfo = vrtxNames.map((vrtx,index)=>{
       occupied:false,
     }
 })
+const roadInfo = roadNames.map((road,index)=>{
+    return {name:road,
+    isBuilt:false,
+  }
+})
 
 //--classes--//
 class Player{
@@ -247,12 +252,18 @@ class Player{
     this.dieRoll = die;
   }
   buyRoad(location){
-
+    if(this.canAffordRoad()){
+      this.placeRoad(location);
+    }
   }
   placeRoad(location){
-    //check player resources
-    //find desired placement
-    //
+    if (roadInfo[location].isBuilt){
+      console.log('occupied')
+    }
+    else{
+      this.roadPlacements.push(roadInfo[location].name)
+      roadInfo[location].isBuilt = true;
+    }
   }
   placeSettlement(location){
     //check player resources
@@ -474,6 +485,7 @@ function takeTurn(player){
 function roadInquiry(){
   //asks for desired road placement
   //alert player if road is taken
+  return '';
 }
 
 
