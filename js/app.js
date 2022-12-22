@@ -44,6 +44,7 @@ const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array
 const resourceNames = ['wood','ore','grain','sheep','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
 const tileRollValues = [4,4,5,2,5,5,1,3,4,6,6,5,3];
+const tileResourceKey = ['ore','wood','grain','wood','sheep','brick','DOME','grain','ore','brick','sheep','wood','grain'];
 //const longestRoadReq = 5; iced
 //const largestArmyReq = 3; iced
 const roadNames =    ['r1', 
@@ -193,16 +194,15 @@ const tileVertexList = [
 const tileInfo = boardList.map((tile, index) =>{
   return {name:tile,
     rollValue:tileRollValues[index],
-    vertices:tileVertexList[index],}
+    vertices:tileVertexList[index],
+    resource:tileResourceKey[index],
+}
 })
 const vertexInfo = vrtxNames.map((vrtx,index)=>{
     return {name:vrtx, 
       roadsNear:vrtxRoadList[index],
-      neighbors: vrtxNeighborList[index],
-      state:{
-        occupied:false,
-        occupier: null,
-        },
+      neighbors:vrtxNeighborList[index],
+      occupied:false,
     }
 })
 
@@ -217,6 +217,8 @@ class Player{
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
     this.victoryPoints=0; //-number of VP player has, 7 to win, 0 at start
     this.dieRoll=0;
+    this.settlementVertices=[];
+    this.roadPlacements=[];
     this.resourcesHeld ={
       wood:0,
       ore:0,
@@ -224,9 +226,6 @@ class Player{
       brick:0,
       grain:0
     }
-  }
-  setdieRoll(obj){
-    this.dieRoll = obj;
   }
   setPlayerNum(num){
     this.playerNum = num;
@@ -246,6 +245,9 @@ class Player{
   rollDice(){
     const die = Math.floor(Math.random()*6) +1;
     this.dieRoll = die;
+  }
+  buyRoad(location){
+
   }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -359,11 +361,9 @@ class BoardTile{
     this.tileType = tileType;
     this.tileNames = ['forest','mountain','fields', 'pasture','hill'];
   }
-  initTiles(){
-
-  }
 }
-
+/*
+switched to declaring as hard coded constants potentially returning to construction in this fashion
 function makeChips(){
       let arr = numTileList.map(function(letter){
         if(letter ==='B'){return {letter: letter, number:2, dots:'.',};
@@ -381,7 +381,7 @@ function makeChips(){
       })
       return arr;
 }  
-
+*/
 //--cached element references--//
 
 //--event listeners--//
