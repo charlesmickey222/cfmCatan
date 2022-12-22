@@ -218,6 +218,7 @@ class Player{
     this.hand = hand; //cards[#of card types(development, vp, resources)];
     this.playerName = playerName;
     this.playerNum =  playerNum;
+    this.active = false;
     this.settlementsHeld=0; //-number of settlements players hold, 5 @ start
     this.citiesHeld=0; //-number of cities player holds,  4 added @ start
     this.roadsHeld=0; //-number of roads player holds, 15 added @ start
@@ -256,13 +257,6 @@ class Player{
   acquireResource(resource,quantity){
     this.resourcesHeld[resource] = this.resourcesHeld[resource] + quantity;
   }
-  buyRoad(location){
-    if(this.canAffordRoad()){
-      this.placeRoad(location);
-      this.resourcesHeld.wood--;
-      this.resourcesHeld.brick--;
-    }
-  }
   placeRoad(location){
     if (roadInfo[location].isBuilt){
       console.log('occupied')
@@ -273,20 +267,35 @@ class Player{
       this.roadsHeld--;
     }
   }
+  buyRoad(location){
+    if(this.canAffordRoad()){
+      this.placeRoad(location);
+      this.resourcesHeld.wood--;
+      this.resourcesHeld.brick--;
+    }
+  }
   placeSettlement(location){
     if (vertexInfo[location].occupied){
       console.log('occupied')
-    }
-    else{
+    }else if(){
+
+    }else{
       this.settlementVertices.push(vertexInfo[location].name)
       roadInfo[location].isBuilt = true;
       this.settlementsHeld--;
     }
   }
+  buySettlement(location){
+    if(this.canAffordRoad()){
+      this.placeRoad(location);
+      this.resourcesHeld.wood--;
+      this.resourcesHeld.brick--;
+    }
+  }
   placeCity(location){
     if (this.settlementVertices.some(vertex => {return vertex === vertexInfo[location].name})){
       if (this.canAffordCity){
-        
+      
       }
     }
   }
@@ -477,7 +486,7 @@ if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[
 
 function firstAndSecondRoundTurn(player){
 player.placeSettlement();
-player.placeRoad()
+player.placeRoad(roadInquiry());
 }
 
 function takeTurn(player){
@@ -502,11 +511,11 @@ tileInfo.forEach(tile => {
   }
 })
 }
-
 function roadInquiry(){
-  //asks for desired road placement
-  //alert player if road is taken
-  return '';
+  return '0';
+}
+function settlementInquiry(){
+  return '0';
 }
 
 
