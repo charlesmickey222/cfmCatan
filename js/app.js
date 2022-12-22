@@ -249,6 +249,24 @@ class Player{
   buyRoad(location){
 
   }
+  placeRoad(location){
+    //check player resources
+    //find desired placement
+    //
+  }
+  placeSettlement(location){
+    //check player resources
+    //display message for insuffficieint resources
+    //allow placement on unoccupied, spaced out vertice
+  }
+  placeCity(location){
+    //check player resources
+    //display message for insuffficieint resources
+    //if sufficient resources find desired placement
+    //allow placement on vertice occupied by player's own settlement
+    //remove settlement
+    //place city
+  }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
 class PlayerDeck {
@@ -355,14 +373,14 @@ class Board{
     this.vertices = vrtxNames;
   }
 }
-
+/*
 class BoardTile{
   constructor(tileType){
     this.tileType = tileType;
     this.tileNames = ['forest','mountain','fields', 'pasture','hill'];
   }
 }
-/*
+
 switched to declaring as hard coded constants potentially returning to construction in this fashion
 function makeChips(){
       let arr = numTileList.map(function(letter){
@@ -406,16 +424,13 @@ function renderBoard(){
 //display current state of gameBoard
 }
 
-function renderTurnCard(){
-//render the acive player's options for their turn
-}
             //game state functions
 function startGame(){
   rollForTurns(gameState.deckOfPlayers.roster);
 }
 
 function changeTurn(){
-  gameState.turnCount *= -1;
+  gameState.turnCount--;
 }
 
 function changeRound(){
@@ -438,7 +453,8 @@ if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[
 }
 
 function firstAndSecondRoundTurn(player){
-//place one settlement and one road
+player.placeSettlement();
+player.placeRoad()
 }
 
 function takeTurn(player){
@@ -459,26 +475,8 @@ function roadInquiry(){
   //asks for desired road placement
   //alert player if road is taken
 }
-function placeRoad(){
-  //check player resources
-  //find desired placement
-  //
-}
 
-function placeSettlement(){
-  //check player resources
-  //display message for insuffficieint resources
-  //allow placement on unoccupied, spaced out vertice
-}
 
-function placeCity(){
-  //check player resources
-  //display message for insuffficieint resources
-  //if sufficient resources find desired placement
-  //allow placement on vertice occupied by player's own settlement
-  //remove settlement
-  //place city
-}
 
 function offerTrade(){
   // check player resources
