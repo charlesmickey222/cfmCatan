@@ -1,6 +1,18 @@
 
 /*  ASCII BOARD
 >           __
+>         / 1  \
+> __      \ __ /      __
+/ 2  \ __ /  3 \ __ /  4 \
+\ __ / 5  \ __ / 6  \ __ /
+>    \ __ / 7  \ __ /
+> __ / 8  \ __ / 9  \ __
+/ 10 \ __ / 11 \ __ / 12 \
+\ __ /    \ __ /    \ __ /
+>         / 13 \
+>         \ __ /
+>
+>           __
 >         / A4 \
 > __      \ __ /      __
 / F4 \ __ / G5 \ __ / B2 \
@@ -13,6 +25,18 @@
 >         \ __ /
 >
 */
+//--variables--//
+let playerNames = [];
+const gameState ={
+  roundCount: 0, //the count of how many rounds have been played
+  turnCount: 1,// how many turns through round have been played
+  playing:false,
+  leaderboard:[],// array of playerName strings sorted by VP, 
+  deckOfPlayers:null,
+  cardDeck:{resources:[],
+  development:[],
+  other:[],},
+}
 
 //--constants--//
 const colorOptions = ['Bone','Blood']//options that player has for colors
@@ -30,33 +54,41 @@ const roadNames =    ['r1',
     'r39' ,'r40','r41','r42','r43','r44','r45', 'r46',
 'r47', 'r48','r49','r50','r51','r52','r53','r54', 'r55',
                    'r56','r57',
-                'r58','r59','r60']
+                'r58','r59','r60'];
 const vrtxNames = ['v1','v2',  
                 'v3',    'v4', 
   'v5', 'v6',    'v7',  'v8',     'v9', 'v10',
 'v11',   'v12','v13',    'v14', 'v15',      'v16',
  'v17', 'v18',   'v19', 'v20',    'v21', 'v22',
-         'v23','v24',   'v25', 'v26',
-  'v27','v28',   'v29',   'v30', 'v31', 'v32',    
-  'v33', 'v34', 'v35',   'v36', 'v37',   'v38',
- 'v39',  'v40',  'v41', 'v42',   'v43', 'v44',
+         'v23','v24',    'v25', 'v26',
+  'v27','v28',   'v29',  'v30',  'v31', 'v32',    
+'v33',   'v34', 'v35',    'v36','v37',   'v38',
+  'v39','v40',   'v41', 'v42',   'v43', 'v44',
                 'v45',    'v46',
-                  'v47','v48',]
-const vertexInfo = {};
-//--variables--//
-let playerNames = [];
-const gameState ={
-  roundCount: 0, //the count of how many rounds have been played
-  turnCount: 1,// how many turns through round have been played
-  playing:false,
-  leaderboard:[],// array of playerName strings sorted by VP, 
-  deckOfPlayers:null,
-  cardDeck:{resources:[],
-  development:[],
-  other:[],},
-}
+                  'v47','v48',];
 
-
+const boardList =['t1',
+          't2',   't3',    't4', 
+              't5',   't6',    
+                  't7', 
+              't8',    't9', 
+          't10',  't11',   't12',
+                  't13'];
+const tileVertexList = [
+  ['v1','v2','v3','v4','v7','v8'],
+  ['v5','v6','v11','v12','v17','v18'],
+  ['v7','v8','v13','v14','v19','v20'],
+  ['v9','v10','v15','v16','v21','v22'],
+  ['v12','v13','v18','v19','v23','v24'],
+  ['v14','v15','v20','v21','v25','v26'],
+  ['v19','v20','v24','v25','v29','v30',],
+  ['v23','v24','v28','v29','v34','v35'],
+  ['v25','v26','v30','v31','v36','v37'],
+  ['v27','v28','v33','v34','v39','v40'],
+  ['v29','v30','v35','v36','v41','v42'],
+  ['v31','v32','v37','v38','v43','v44'],
+  ['v41','v42','v45','v46','v47','v48']
+]
 //--classes--//
 class Player{
   constructor (playerName, playerNum,hand){
@@ -75,8 +107,16 @@ class Player{
   setPlayerNum(num){
     this.playerNum = num;
   }
-  viewHand(){
-    this.hand.reduce(function(prev, el){
+  getResources(){
+    this.hand[0].reduce(function(prev, el){
+      if(prev[el]){
+        prev[el].count++;
+      }else{
+        prev[el]={
+          resource:`${el.cardType}`,
+          count: 1,
+        }
+      }
     },{})
   }
   canAffordRoad(){
@@ -240,6 +280,7 @@ function init(){
   const vpDeck = new VpCards();
   gameState.cardDeck.resources = rDeck;
   gameState.cardDeck.development = vpDeck;
+  rollForTurns();
 
 }
             //render functions
@@ -275,6 +316,7 @@ for (plyr in gameState.deckOfPlayers){
 }
 if(gameState.deckOfPlayers.roster[0].diceRoll === gameState.deckOfPlayers.roster[1].diceRoll){
   rollForTurns();
+  return;
 }else{
   gameState.deckOfPlayers.sortByRoll();
 }
