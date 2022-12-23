@@ -1,6 +1,6 @@
 # Lupa's Mound
 ## *deployment link*
-[Imgur](https://imgur.com/2kZcoyO)
+### ![board Picture](https://imgur.com/2kZcoyO)
 ### An original board game built from the foundational gameplay elements of Settlers of Catan: Lupa's Mound carries over many of the same rules and mechanics from the *classic* Catan while also establishing its own unique gameplay by centering around 2 player games. A smaller board, a single die, and last but not least: a replacement of the robber mechanic with combat!
 ## Basic Game Flow
 ### Two players battle 
