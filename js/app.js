@@ -306,6 +306,9 @@ class Player{
       this.cityVertices.push(vrtxNames[location])
       let temp = this.settlementVertices.indexOf(vrtxNames[location])
       this.settlementVertices.splice(temp, 1);
+      this.citiesHeld--;
+      this.resourcesHeld['ore']-=3;
+      this.resourcesHeld['grain']-=3;
     }
   }
 }
@@ -510,10 +513,16 @@ function takeTurn(player){
   //roll dice, corresponding resources given to all players
   //  if seven move robber, rob peer
   //until player clicks end turn or completes all possible moves, gameplay options will be displayed
-  player.rollDice();
+  
   if (gameState.turnCount <= 2){
     firstAndSecondRoundTurn(player);
   }else{
+    player.rollDice();
+    let currentRoll = player.dieRoll;
+    if(currentRoll === 1){
+      moveDomeMaster();
+      thunderDome();
+    }
     do{
 
     }while(gameState.playing === true)
@@ -585,9 +594,5 @@ function test(){
   startGame()
   gameState.deckOfPlayers.roster[0].placeSettlement(1);
   gameState.deckOfPlayers.roster[1].placeSettlement(10);
-  for(let i =1; i <7;i++){
-    harvest(i)
-    console.log(gameState.deckOfPlayers)
-  }
 
 }
