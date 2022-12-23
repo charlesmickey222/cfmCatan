@@ -278,10 +278,7 @@ class Player{
   placeSettlement(location){
     if (vertexInfo[location].occupied || vertexInfo[location].isValid === false){
       console.log('occupied')
-    }/*else if(hasNeighbors(location)){
-      console.log('not valid');
-    }
-    else*/{
+    }else{
       this.settlementVertices.push(vertexInfo[location].name)
       vertexInfo[location].occupied = true;
       vertexInfo[location].isValid = false;
@@ -359,8 +356,6 @@ class ResourceCards extends Cards{
     this.resource = '';
     this.count = 13; //amount of for each type of resource
     this.deck = [];
-  }
-  initResourceDeck(){
     let temp = [];
     let n = 0;
     do{
@@ -454,7 +449,6 @@ function init(){
   gameState.deckOfPlayers = new PlayerDeck(2);
   gameState.deckOfPlayers.populateRoster();
   const rDeck = new ResourceCards();
-  rDeck.initResourceDeck();
   const vpDeck = new VpCards();
   gameState.cardDeck.resources = rDeck;
   gameState.cardDeck.development = vpDeck;
