@@ -39,6 +39,7 @@ const gameState ={
   currentRoll:null,
 }
 let bonePendingMessage = '';
+let bloodPendingMessage = '';
 //--constants--//
 const colors =['rgb(204, 153, 102)','rgb(204, 51, 0)']
 const turnMessage = "its your turn";
@@ -483,6 +484,9 @@ function renderResourceValues(){
 gameState.deckOfPlayers.roster
 }
 function renderBoard(){
+  for (element in vertexElements){
+
+  }
 }
 function renderMessage(){
   boneAlertMessage.innerHTML = bonePendingMessage;
@@ -621,5 +625,4 @@ function test(){
   init()
   startGame()
   gameState.deckOfPlayers.roster[0].placeSettlement(1);
-  renderBoard
 }
