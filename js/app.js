@@ -38,10 +38,12 @@ const gameState ={
   other:[],},
   currentRoll:null,
 }
+let bonePendingMessage = '';
 //--constants--//
+const colors =['rgb(204, 153, 102)','rgb(204, 51, 0)']
 const turnMessage = "its your turn";
 const roadMessage = "click road";
-const colorOptions = ['Bone','Blood']//options that player has for colors
+const nameOptions = ['BONE','BLOOD']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const resourceNames = ['wood','ore','grain','sheep','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
@@ -217,10 +219,10 @@ const roadInfo = roadNames.map((road,index)=>{
 
 //--classes--//
 class Player{
-  constructor (playerName, playerNum,hand){
-    this.hand = hand; //cards[#of card types(development, vp, resources)];
+  constructor (playerName, playerNum, color){
     this.playerName = playerName;
     this.playerNum =  playerNum;
+    this.color= color;
     this.active = false;
     this.settlementsHeld=5; //-number of settlements players hold, 5 @ start
     this.citiesHeld=4; //-number of cities player holds,  4 added @ start
@@ -230,6 +232,7 @@ class Player{
     this.settlementVertices=[];
     this.cityVertices=[];
     this.roadPlacements=[];
+    this.hand = []; //cards[#of card types(development, vp, resources)];
     this.resourcesHeld ={
       wood:0,
       ore:0,
@@ -237,6 +240,9 @@ class Player{
       brick:0,
       grain:0
     }
+  }
+  rollDice(){
+    this.dieRoll = Math.floor(Math.random()*6)+1;
   }
   setPlayerNum(num){
     this.playerNum = num;
@@ -285,6 +291,7 @@ class Player{
         vertexInfo[idx].isValid = false;
       })
       this.settlementsHeld--;
+      renderBoard();
     }
   }
   buySettlement(location){
@@ -314,11 +321,11 @@ class Player{
 class PlayerDeck {
   constructor(numPlayers){
     this.numPlayers = numPlayers;
-    this.roster = colorOptions;
+    this.roster =nameOptions;
   }
   populateRoster(){
-    this.roster = this.roster.map(function(player, idx){
-        let newPlayer = new Player(player, idx, [/*vp&devCards*/]);
+    this.roster = this.roster.map(function( idx){
+        let newPlayer = new Player(nameOptions[idx], idx, colors[idx]);
         newPlayer.settlements = 5;
         newPlayer.cities = 4;
         newPlayer.roadsHeld = 15;
@@ -448,6 +455,7 @@ const boneResourceElements = document.querySelector('#plyrOneRsrceTable');
 const boneAlertMessage = document.querySelector('#pOneMessage');
 const bloodAlertMessage = document.querySelector('#pTwoMessage');
 const bloodResourceElements = document.querySelector('#plyrTwoRsrceTable');
+const vertexElements = document.querySelectorAll('.vertice');
 //--event listeners--//
 boneEndTurnButton.addEventListener('click',function(){
 boneEndTurnButton.style = "display:none;";
@@ -475,9 +483,10 @@ function renderResourceValues(){
 boneResourceElements.forEach()
 }
 function renderBoard(){
-//display current state of gameBoard
 }
-
+function renderMessage(){
+  boneAlertMessage.innerHTML = bonePendingMessage;
+}
             //game state functions
 
 function startGame(){
@@ -522,14 +531,17 @@ if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[
 
 function firstAndSecondRoundTurn(player){
 player.placeSettlement(settlementInquiry());
-player.placeRoad(roadInquiry());
 }
 
 function takeTurn(player){
   //roll dice, corresponding resources given to all players
   //  if seven move robber, rob peer
   //until player clicks end turn or completes all possible moves, gameplay options will be displayed
-  
+  if (player[playerName] === 'BONE'){
+    boneAlertMessage = turnMessage;
+  }else{
+
+  }
   if (gameState.turnCount <= 2){
     firstAndSecondRoundTurn(player);
   }else{
@@ -571,10 +583,10 @@ gameState.deckOfPlayers.roster.forEach(player =>{
 }
 
 function roadInquiry(){
-  return '0';
+  return '8';
 }
 function settlementInquiry(){
-  return '0';
+  return '22';
 }
 
 
@@ -609,6 +621,5 @@ function test(){
   init()
   startGame()
   gameState.deckOfPlayers.roster[0].placeSettlement(1);
-  gameState.deckOfPlayers.roster[1].placeSettlement(10);
-
+  renderBoard
 }

@@ -9,6 +9,10 @@
 - Git
 
 ## Patch Notes
-
+###### stay tuned
 ## Ice Box
+#### > Implementing remaining traditional catan rules
+#### > Add non mobile design in html
+### 
+
 

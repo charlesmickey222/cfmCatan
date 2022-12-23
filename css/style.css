@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Press+Start+2P&display=swap');
-@media  (min-width:750px){
+@media  (min-width:3000px){
   #gameBoard{
     position: absolute;
     width: 468px;
@@ -55,7 +55,6 @@ p{
   width: 364px;
   height: 240px;
   background-color: rgba(131, 131, 131, 0.533);
-  z-index: -1;
   top: 120px;
   margin-bottom:30px;
 }
@@ -83,7 +82,7 @@ p{
   content: "";
   width:0;
   height:0;
-  border-right: 15px solid rgba(1, 0, 0, 0.533);
+  border-right: 15px solid rgba(1, 0, 0, 0.2);
   border-top: 26px solid transparent;
   border-bottom: 26px solid transparent;
   position: absolute;
@@ -92,8 +91,8 @@ p{
 .hex{
   width: 30px;
   height: 52px;
-  background-color: rgba(15, 0, 0, 0.533);
-  z-index: 1;
+  background-color: rgba(15, 0, 0, 0.2);
+  z-index: .5;
   position: relative;
   top: 60px;
   margin:3px;
@@ -103,7 +102,7 @@ p{
   content: "";
   width:0;
   height:0;
-  border-left: 15px solid rgba(2, 0, 0, 0.533);
+  border-left: 15px solid rgba(2, 0, 0, 0.2);
   border-top: 26px solid transparent;
   border-bottom: 26px solid transparent;
   position: absolute;
@@ -473,4 +472,12 @@ ul{
   100%{
     color: rgba(0, 0, 0, 1);
   }
+}
+
+i{
+  position: absolute;
+  font-size: 60px;
+  z-index: .9;
+  color:rgb(255, 0, 0)
+
 }
