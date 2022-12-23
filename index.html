@@ -7,52 +7,48 @@
   <link rel="stylesheet" href="./css/style.css">
   <script defer src="./js/app.js"></script>
   <script defer src="https://kit.fontawesome.com/ec0fd5223b.js" crossorigin="anonymous"></script>
-  <style> @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); </style>
   <title>Catan!</title>
 </head>
 <body>
-  <h1>Lupa's Mound</h1>
+  <p>Lupas&nbsp;&nbsp;Mound</p>
 <section id ="boardContainer">
   <div id="gameBoard"></div>
   <div id="hexContainer">
-    <span class="hexRow" id ="rowOne">
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
+    <span class="hexColumn" id ="cOne">
+      <div class="hex" id="t2"></div>
+      <div class="empty"></div>
+      <div class="hex" id="t10"></div>
+      <div class="empty"></div>
     </span>
-    <span class="hexRow" id ="rowTwo">
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
+    <span class="hexColumn" id ="cTwo">
+      <div class="hex" id="t5"></div>
+      <div class="hex" id="t8"></div>
+      <div class="empty" id="t"></div>
     </span>
-    <span class="hexRow" id ="rowThree">
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
+    <span class="hexColumn" id ="cThree">
+      <div class="hex" id="t1"></div>
+      <div class="hex" id="t3"></div>
+      <div class="hex" id="t7"></div>
+      <div class="hex" id="t11"></div>
+      <div class="hex" id="t13"></div>
     </span>
-    <span class="hexRow" id ="rowFour">
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
+    <span class="hexColumn" id ="cFour">
+      <div class="hex" id="t6"></div>
+      <div class="hex" id="t9"></div>
+      <div class="empty" id="t"></div>
     </span>
-    <span class="hexRow" id ="rowFive">
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
-      <div class="hex"></div>
+    <span class="hexColumn" id ="cFive">
+      <div class="hex" id="t4"></div>
+      <div class="empty" id="t"></div>
+      <div class="hex" id="t12"></div>
+      <div class="empty" id="t"></div>
+      
     </span>
   </section>
 <ul id='infoHub'>
   <li>
     <div class="playerBox" id="bonePlayerBox">
-      <div class="playerName">BONE</div>
+      <div class="playerName">BONE<span class="message" id="pOneMessage">alert</span></div>
       <table class="resourceTable" id="plyrOneRsrceTable">
         <tr>
           <th>wood</th>
@@ -86,7 +82,7 @@
   </li>
   <li>
     <div class="playerBox" id="bloodPlayerBox">
-      <div class="playerName">BLOOD</div>
+      <div class="playerName">BLOOD<span class="message" id="pOneMessage">alert</span></div>
       <table class="resourceTable" id="plyrTwoRsrceTable">
           <tr>
             <th>0</th>
