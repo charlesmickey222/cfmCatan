@@ -1,73 +1,97 @@
+
 body{
   min-width: 450px;
   min-height: 600px;
   background-color: rgba(192, 252, 192, 0.422);
+  margin:0;
+  padding:0;
+  font-size:9px;
 }
 ul{
   position: absolute;
   list-style-type: none;
-  margin:0;
+  margin-left:5px;
   padding:0;
   min-width:90%;
+  max-width: 100%;
   min-height:20%;
-  background-color: aqua;
   border:5px solid rgba(61, 97, 59, 0.718);
   border-radius: 2px;
   align-self: center;
   bottom: 10px;
 }
+
 .playerBox{
   min-height: 50%;
-  display:inline-block;
+  display:flex;
+  flex-direction: row;
+  font-family: 'Press Start 2P', cursive;
+  margin:0 auto;
 }
 #bonePlayerBox{
-  color: bisque;
+  color: rgb(251, 215, 171);
   background-color: rgb(223, 134, 83);
   position: absolute;
   min-height: 50%;
   min-width: 100%;
 }
 #bloodPlayerBox{
-  background-color: bisque;
-  color: rgb(130, 4, 4);
+  background-color: rgb(122, 0, 0);
+  color: rgb(251, 215, 171);
   position: absolute;
   min-height: 50%;
   min-width: 100%;
   bottom:0px;
+  flex-direction: row-reverse;
 }
 
 .playerName{
+  position: relative;
   text-align: left;
+  padding: 5px;
+  height:90%;
   font-size: 30px;
+  background-image: -webkit-radial-gradient(50% 45% , closest-corner, rgba(250, 248, 234, 0.748), rgba(88, 88, 88, 0.1), transparent);
+  vertical-align: middle;
+}
+.buttonContainer{
+  font-size: 6px;
+}
+.dropDownOptions{
+  position: absolute;
+  display: none;
+}
+.dropDown :hover .dropDownOptions{
+  display: block;
+  background-color: aliceblue;
 }
 #gameBoard{
   position: absolute;
-  width: 468px;
-  height: 240px;
-  background-color: rgba(0, 0, 0, 0.477);
+  width: 364px;
+  height: 210px;
+  background-color: white;
   z-index: -1;
   top: 150px;
-  left:-60px;
 }
 #gameBoard::before{
   content: "";
   width:0;
   height:0;
-  border-bottom: 120px solid ;
-  border-right: 234px solid transparent;
-  border-left: 234px solid transparent;
+  border-bottom: 105px solid white;
+  border-right: 182px solid transparent;
+  border-left: 182px solid transparent;
   position: absolute;
-  top:-120px;
+  top:-105px;
 }
 #gameBoard::after{
   content: "";
   width:0;
   height:0;
   position: absolute;
-  border-top: 120px solid ;
-  border-left: 234px solid transparent;
-  border-right: 234px solid transparent;
-  bottom:-120px;
+  border-top: 105px solid white;
+  border-left: 182px solid transparent;
+  border-right: 182px solid transparent;
+  bottom: -105px;
 }
 
 @media  (min-width:750px){
@@ -85,8 +109,8 @@ ul{
     width:0;
     height:0;
     border-bottom: 120px solid ;
-    border-right: 234px solid transparent;
-    border-left: 234px solid transparent;
+    border-right: 182px solid transparent;
+    border-left: 182px solid transparent;
     position: absolute;
     top:-120px;
   }
@@ -96,8 +120,11 @@ ul{
     height:0;
     position: absolute;
     border-top: 120px solid ;
-    border-left: 234px solid transparent;
-    border-right: 234px solid transparent;
+    border-left: 182px solid transparent;
+    border-right: 182px solid transparent;
     bottom:-120px;
   }
+}
+#playerTwoResourceTable{
+  justify-self: left;
 }

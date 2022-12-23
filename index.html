@@ -7,24 +7,75 @@
   <link rel="stylesheet" href="./css/style.css">
   <script defer src="./js/app.js"></script>
   <script defer src="https://kit.fontawesome.com/ec0fd5223b.js" crossorigin="anonymous"></script>
+  <style> @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); </style>
   <title>Catan!</title>
 </head>
 <body>
   <div id="gameBoard">
     
   </div>
+  <button id="startButton">Start</button>
 <ul id='infoHub'>
   <li>
     <div class="playerBox" id="bonePlayerBox">
       <div class="playerName">BONE</div>
+      <table class="resourceTable" id="plyrOneRsrceTable">
+        <tr>
+          <th>wood</th>
+          <th>0</th>
+        </tr>
+        <tr>
+          <th>brick</th>
+          <th>0</th>
+        </tr>
+        <tr>
+          <th>sheep</th>
+          <th>0</th>
+        </tr>
+        <tr>
+          <th>ore</th>
+          <th>0</th>
+        </tr>
+        <tr>
+          <th>grain</th>
+          <th>0</th>
+        </tr>
+      </table>
     </div>
   </li>
   <li>
     <div class="playerBox" id="bloodPlayerBox">
       <div class="playerName">BLOOD</div>
-      <i class="fa-regular fa-fill-drip"></i>
-
-
+      <table class="resourceTable" id="plyrTwoRsrceTable">
+          <tr>
+            <th>0</th>
+            <th>wood</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <th>brick</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <th>sheep</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <th>ore</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <th>grain</th>
+          </tr>
+        </table>
+        <div class="buttonContainer">
+          <button class="dropDown">turnOptions</button>
+          <div class="dropDownOptions">
+            <div class="action">Build Road</div>
+            <div class="action">Build Settlement</div>
+            <div class="action">Upgrade Settlement</div>
+          </div>
+        </div>
     </div>
   </li>
 </ul>
