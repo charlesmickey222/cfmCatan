@@ -15,7 +15,7 @@ p{
   margin-left: -20px;
   padding:20px;
   /*background-color: antiquewhite;*/
-  background-image: -webkit-linear-gradient(antiquewhite, transparent);
+  background-image: -webkit-linear-gradient(rgb(237, 144, 144), transparent);
   border:5px transparent;
   border-radius: 5%;
 }
@@ -136,8 +136,134 @@ margin-bottom:52px;
 margin-left: 5px;
 margin-bottom: 26px;
 }
-
-
+#roadContainer{
+  height:240px;
+  position: absolute;
+  top:120px;
+}
+.roadRow{
+  height:52px;
+  position: relative;
+  display: inline;
+}
+.spacer{
+  padding-left: 15px;
+  padding-right:15px;
+}
+.altSpacer{
+  padding-left: 36px;
+  padding-right:36px;
+}
+.halfSpacer{
+  padding-right:21px;
+}
+.road{
+  font-size:42px;
+  position: absolute;
+}
+.road.fSlash{
+position: relative;
+font-weight: 900;
+rotate: -25deg;
+}
+.road.bSlash{
+  position: relative;
+  font-weight: 900;
+  rotate: 10deg;
+  }
+.road.flat{
+  position: relative;
+    font-size: 64px;
+    font-weight: 900;
+}
+#rowOne{
+  position: relative;
+  top:-68px;
+  left:135px;
+}
+#rowTwo{
+  position: relative;
+  left:89px;
+  top:-34px;
+}
+#rowThree{
+  position: relative;
+  left:33px;
+  top:-8px;
+}
+#rowFour{
+  position: relative;
+  top:-89px;
+  left: 61px;
+  margin-right:0;
+}
+#rowFive{
+  position: inherit;
+  top:40px;
+  left:50px;
+  padding:none;
+}
+#rowSix{
+  position: relative;
+  top:-133px;
+  left:114px;
+  margin:none;
+}
+#rowSeven{
+  position: relative;
+  left:52px;
+  top:-154px;
+}
+#rowEight{
+  position: relative;
+  top:-230px;
+  left:62px;
+}
+#rowNine{
+  position: relative;
+  top:-268px;
+  left:102px;
+}
+#rowTen{
+  position: relative;
+  top:-275px;
+  left:-48px;
+}
+#rowEleven{
+  position: relative;
+  top:-293px;
+  left:103px;
+}
+#rowTwelve{
+  position: relative;
+  top:-370px;
+  left:62px;
+}
+#rowThirteen{
+  position: relative;
+  top:-390px;
+  left:51px;
+}
+#rowFourteen{
+  position: relative;
+  bottom:467px;
+  left:114px;
+}
+#rowFifteen{
+  position: relative;
+  bottom:485px;
+  left:52px;
+}
+#rowSixteen{
+position: relative;
+bottom:559px;
+left:62px;
+}
+#rowSeventeen{
+  position: relative;
+bottom:524px;
+left:-87px;
+}
 ul{
   position: absolute;
   list-style-type: none;

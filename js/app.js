@@ -443,9 +443,17 @@ function makeChips(){
 }  
 */
 //--cached element references--//
+const resourceTables = document.querySelectorAll('table');
+const boneEndTurnButton = document.querySelector('#boneEndTurn')
+const bloodEndTurnButton = document.querySelector('#bloodEndTurn')
 
 //--event listeners--//
+boneEndTurnButton.addEventListener('click',function(){
 
+})
+bloodEndTurnButton.addEventListener('click',function(){
+  
+})
 //--functions--//
             //initialization functions
 function init(){
@@ -478,7 +486,7 @@ function changeRound(){
 gameState.roundCount++;
 gameState.turnCount = 1;
 }
-
+//possibly extraneous
 function hasNeighbors(location){
   let suspect = vertexInfo[location];
   let susNeighbors = suspect.neighbors;
@@ -505,7 +513,7 @@ if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[
 }
 
 function firstAndSecondRoundTurn(player){
-player.placeSettlement();
+player.placeSettlement(settlementInquiry());
 player.placeRoad(roadInquiry());
 }
 

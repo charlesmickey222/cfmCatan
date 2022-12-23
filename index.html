@@ -10,7 +10,7 @@
   <title>Catan!</title>
 </head>
 <body>
-  <p>Lupas&nbsp;&nbsp;Mound</p>
+  <p><span>Lupas</span>&nbsp;&nbsp;<span>Mound</span></p>
 <section id ="boardContainer">
   <div id="gameBoard"></div>
   <div id="hexContainer">
@@ -44,29 +44,84 @@
       <div class="empty" id="t"></div>
       
     </span>
+    </div>
+    <div id="roadContainer">
+      <div class = "roadRow" id="rowOne">
+        <span class="spacer"> </span><span class="road flat" id="r1">_</span>
+      </div>
+      <div class = "roadRow" id="rowTwo">
+        <span class="road fSlash" id="r2">/</span><span class="spacer"> </span><span class="road bSlash" id="r3">\</span>
+      </div>
+      <div class = "roadRow" id="rowThree">
+        <span class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="road fSlash" id="r7">/</span>
+      </div>
+      <div class = "roadRow" id="rowFour">
+        <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>
+      </div>
+      <div class = "roadRow" id="rowFive">
+        <span class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="halfSpacer"></span><span class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="halfSpacer"></span><span class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span>
+      </div>
+      <div class = "roadRow" id="rowSix">
+          <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>
+      </div>
+      <div class = "roadRow" id="rowSeven">
+        <span class="road bSlash" id="r5">\</span><span class="spacer"></span><span style="margin-left:-3px;" class="road fSlash" id="r7">/</span><span class="road fSlash"id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r3">\</span><span class="road bSlash" id="r3">\</span><span class="spacer"></span><span class="road fSlash"id="r7">/</span><span style="margin-left:-2px;" class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span><span class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="road fSlash" id="r5">/</span>
+      </div>
+      <div class = "roadRow" id="rowEight">
+        <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>
+      </div>
+      <div class = "roadRow" id="rowNine">
+        <span class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="road fSlash" id="r7">/</span><span class="road fSlash"id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r3">\</span><span class="road bSlash" id="r3">\</span><span class="spacer"></span><span class="road fSlash"id="r7">/</span>
+      </div>
+      <div class = "roadRow" id="rowTen">
+        <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>
+      </div>
+      <div class = "roadRow" id="rowEleven">
+        <span class="road fSlash"id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r3">\</span><span style="margin-left:-2px;" class="road bSlash" id="r3">\</span><span class="spacer"></span><span style="margin-left:1px;" class="road fSlash" id="r7">/</span><span style="margin-left:-1px;" class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span>
+      </div>
+      <div class = "roadRow" id="rowTwelve">
+        <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>
+      </div>
+      <div class = "roadRow" id="rowThirteen">
+        <span class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span><span style="margin-left:-2px;" class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="road fSlash" id="r7">/</span><span class="road fSlash"id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r3">\</span><span style="margin-left:-2px;" class="road bSlash" id="r3">\</span><span class="spacer"></span><span class="road fSlash"id="r7">/</span> <span style="margin-left:-3px;" class="road fSlash" id="r7">/</span><span class="spacer"></span><span class="road bSlash" id="r5">\</span>
+      </div>
+      <div class = "roadRow" id="rowFourteen">
+        <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>      
+      </div>
+      <div class = "roadRow" id="rowFifteen">
+        <span class="road bSlash" id="r5">\</span><span class="spacer"></span><span style="margin-left:-2px;" class="road fSlash" id="r7">/</span><span style="margin-left: -20px;" class="altSpacer"></span><span class="road bSlash" id="r3">\</span><span class="spacer"></span><span class="road fSlash"id="r7">/</span><span class="altSpacer"></span><span style="margin-left:-20px" class="road bSlash" id="r5">\</span><span class="spacer"></span><span class="road fSlash" id="r5">/</span>
+      </div>
+      <div class = "roadRow" id="rowSixteen">
+        <span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span><span class="altSpacer"></span><span class="road flat" id="r1">_</span>    
+      </div>
+      <div class = "roadRow" id="rowSeventeen">
+        <span class="road fSlash" id="r2">/</span><span class="spacer"> </span><span class="road bSlash" id="r3">\</span>
+      </div>
+      
+    </div>
   </section>
 <ul id='infoHub'>
   <li>
     <div class="playerBox" id="bonePlayerBox">
       <div class="playerName">BONE<span class="message" id="pOneMessage">alert</span></div>
       <table class="resourceTable" id="plyrOneRsrceTable">
-        <tr>
+        <tr id="wood">
           <th>wood</th>
           <th>0</th>
         </tr>
-        <tr>
+        <tr id="brick">
           <th>brick</th>
           <th>0</th>
         </tr>
-        <tr>
+        <tr id="sheep">
           <th>sheep</th>
           <th>0</th>
         </tr>
-        <tr>
+        <tr id="ore">
           <th>ore</th>
           <th>0</th>
         </tr>
-        <tr>
+        <tr id="grain">
           <th>grain</th>
           <th>0</th>
         </tr>
@@ -76,7 +131,7 @@
         <button class="actionButton">Build Settlement</button>
         <button class="actionButton">Upgrade</button>
         <button class="actionButton">Buy VP</button>
-        <button class="actionButton">end turn</button>
+        <button class="actionButton" id='boneEndTurn'>end turn</button>
     </div>
     </div>
   </li>
@@ -84,23 +139,23 @@
     <div class="playerBox" id="bloodPlayerBox">
       <div class="playerName">BLOOD<span class="message" id="pOneMessage">alert</span></div>
       <table class="resourceTable" id="plyrTwoRsrceTable">
-          <tr>
+          <tr id="wood">
             <th>0</th>
             <th>wood</th>
           </tr>
-          <tr>
+          <tr id="brick">
             <th>0</th>
             <th>brick</th>
           </tr>
-          <tr>
+          <tr id="sheep">
             <th>0</th>
             <th>sheep</th>
           </tr>
-          <tr>
+          <tr id="ore">
             <th>0</th>
             <th>ore</th>
           </tr>
-          <tr>
+          <tr id="grain">
             <th>0</th>
             <th>grain</th>
           </tr>
@@ -110,7 +165,7 @@
             <button class="actionButton">Build Settlement</button>
             <button class="actionButton">Upgrade</button>
             <button class="actionButton">Buy VP</button>
-            <button class="actionButton" id="endTurn">end turn</button>
+            <button class="actionButton" id='bloodEndTurn'>end turn</button>
         </div>
     </div>
   </li>
