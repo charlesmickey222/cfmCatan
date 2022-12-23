@@ -3,16 +3,105 @@ body{
   min-width: 450px;
   min-height: 600px;
   background-color: rgba(192, 252, 192, 0.422);
-  margin:0;
+  margin:5px;
   padding:0;
   font-size:9px;
 }
+#gameBoard{
+  position: absolute;
+  width: 364px;
+  height: 240px;
+  background-color: rgba(131, 131, 131, 0.533);
+  z-index: -1;
+  top: 150px;
+  margin-bottom:30px;
+}
+#gameBoard::before{
+  content: "";
+  width:0;
+  height:0;
+  border-bottom: 105px solid rgba(131, 131, 131, 0.533);
+  border-right: 182px solid transparent;
+  border-left: 182px solid transparent;
+  position: absolute;
+  top:-105px;
+}
+#gameBoard::after{
+  content: "";
+  width:0;
+  height:0;
+  position: absolute;
+  border-top: 105px solid rgba(131, 131, 131, 0.533);
+  border-left: 182px solid transparent;
+  border-right: 182px solid transparent;
+  bottom: -105px;
+}
+.hex::before{
+  content: "";
+  width:0;
+  height:0;
+  border-right: 15px solid rgba(1, 0, 0, 0.533);
+  border-top: 26px solid transparent;
+  border-bottom: 26px solid transparent;
+  position: absolute;
+  left:-15px;
+}
+.hex{
+  width: 30px;
+  height: 52px;
+  background-color: rgba(15, 0, 0, 0.533);
+  z-index: 1;
+  position: relative;
+  top: 60px;
+  margin:3px;
+}
+
+.hex::after{
+  content: "";
+  width:0;
+  height:0;
+  border-left: 15px solid rgba(2, 0, 0, 0.533);
+  border-top: 26px solid transparent;
+  border-bottom: 26px solid transparent;
+  position: absolute;
+  right: -15px;
+}
+
+.hexRow{
+  position: relative;
+  margin-left: 35px;
+  display: inline-block;
+  margin:-5px;
+  padding:7px;
+  margin-top:15px;
+}
+#rowOne{
+  margin-left: 52px;
+  margin-bottom:26px;
+  }
+#rowTwo{
+margin-left:5px;
+margin-bottom:52px;
+}
+#rowThree{
+  margin-left: 5px;
+  margin-bottom: 26px;
+}
+#rowFour{
+  margin-left: 5px;
+  margin-bottom:52px;
+}
+#rowFive{
+margin-left: 5px;
+margin-bottom: 26px;
+}
+
+
 ul{
   position: absolute;
   list-style-type: none;
-  margin-left:5px;
   padding:0;
-  min-width:90%;
+  min-width:95%;
   max-width: 100%;
   min-height:20%;
   border:5px solid rgba(61, 97, 59, 0.718);
@@ -26,7 +115,6 @@ ul{
   display:flex;
   flex-direction: row;
   font-family: 'Press Start 2P', cursive;
-  margin:0 auto;
 }
 #bonePlayerBox{
   color: rgb(251, 215, 171);
@@ -48,52 +136,23 @@ ul{
 .playerName{
   position: relative;
   text-align: left;
-  padding: 5px;
+  padding: 2px;
   height:90%;
   font-size: 30px;
   background-image: -webkit-radial-gradient(50% 45% , closest-corner, rgba(250, 248, 234, 0.748), rgba(88, 88, 88, 0.1), transparent);
   vertical-align: middle;
 }
-.buttonContainer{
+.actionButton{
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
   font-size: 6px;
+  background-color: rgba(192, 252, 192, 0.422);
+  margin: 2px;
+  text-align: center;
 }
-.dropDownOptions{
-  position: absolute;
-  display: none;
+#endTurn{
+  display:none;
 }
-.dropDown :hover .dropDownOptions{
-  display: block;
-  background-color: aliceblue;
-}
-#gameBoard{
-  position: absolute;
-  width: 364px;
-  height: 210px;
-  background-color: white;
-  z-index: -1;
-  top: 150px;
-}
-#gameBoard::before{
-  content: "";
-  width:0;
-  height:0;
-  border-bottom: 105px solid white;
-  border-right: 182px solid transparent;
-  border-left: 182px solid transparent;
-  position: absolute;
-  top:-105px;
-}
-#gameBoard::after{
-  content: "";
-  width:0;
-  height:0;
-  position: absolute;
-  border-top: 105px solid white;
-  border-left: 182px solid transparent;
-  border-right: 182px solid transparent;
-  bottom: -105px;
-}
-
 @media  (min-width:750px){
   #gameBoard{
     position: absolute;
@@ -124,7 +183,4 @@ ul{
     border-right: 182px solid transparent;
     bottom:-120px;
   }
-}
-#playerTwoResourceTable{
-  justify-self: left;
 }

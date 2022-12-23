@@ -11,10 +11,44 @@
   <title>Catan!</title>
 </head>
 <body>
-  <div id="gameBoard">
-    
-  </div>
-  <button id="startButton">Start</button>
+  <h1>Lupa's Mound</h1>
+<section id ="boardContainer">
+  <div id="gameBoard"></div>
+  <div id="hexContainer">
+    <span class="hexRow" id ="rowOne">
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+    </span>
+    <span class="hexRow" id ="rowTwo">
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+    </span>
+    <span class="hexRow" id ="rowThree">
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+    </span>
+    <span class="hexRow" id ="rowFour">
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+    </span>
+    <span class="hexRow" id ="rowFive">
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+      <div class="hex"></div>
+    </span>
+  </section>
 <ul id='infoHub'>
   <li>
     <div class="playerBox" id="bonePlayerBox">
@@ -41,6 +75,13 @@
           <th>0</th>
         </tr>
       </table>
+      <div class="buttonContainer">
+        <button class="actionButton">Build Road</button>
+        <button class="actionButton">Build Settlement</button>
+        <button class="actionButton">Upgrade</button>
+        <button class="actionButton">Buy VP</button>
+        <button class="actionButton">end turn</button>
+    </div>
     </div>
   </li>
   <li>
@@ -69,12 +110,11 @@
           </tr>
         </table>
         <div class="buttonContainer">
-          <button class="dropDown">turnOptions</button>
-          <div class="dropDownOptions">
-            <div class="action">Build Road</div>
-            <div class="action">Build Settlement</div>
-            <div class="action">Upgrade Settlement</div>
-          </div>
+            <button class="actionButton">Build Road</button>
+            <button class="actionButton">Build Settlement</button>
+            <button class="actionButton">Upgrade</button>
+            <button class="actionButton">Buy VP</button>
+            <button class="actionButton" id="endTurn">end turn</button>
         </div>
     </div>
   </li>
