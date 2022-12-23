@@ -480,7 +480,7 @@ function render(){
   renderBoard();
 }
 function renderResourceValues(){
-boneResourceElements.forEach()
+gameState.deckOfPlayers.roster
 }
 function renderBoard(){
 }
