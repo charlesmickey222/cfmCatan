@@ -1,4 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Press+Start+2P&display=swap');
+@media  (min-width:750px){
+  #gameBoard{
+    position: absolute;
+    width: 468px;
+    height: 240px;
+    background-color: rgba(0, 0, 0, 0.477);
+    z-index: -1;
+    top: 100px;
+    left:30px;
+  }
+  #gameBoard::before{
+    content: "";
+    width:0;
+    height:0;
+    border-bottom: 120px solid ;
+    border-right: 182px solid transparent;
+    border-left: 182px solid transparent;
+    position: absolute;
+    top:-120px;
+  }
+  #gameBoard::after{
+    content: "";
+    width:0;
+    height:0;
+    position: absolute;
+    border-top: 120px solid ;
+    border-left: 182px solid transparent;
+    border-right: 182px solid transparent;
+    bottom:-120px;
+  }
+}
 body{
   min-width: 450px;
   min-height: 600px;
@@ -160,6 +191,10 @@ margin-bottom: 26px;
 .road{
   font-size:42px;
   position: absolute;
+  cursor: pointer;
+  animation-name: roadAnimation;
+  animation-duration: 5s;
+  animation-iteration-count: 0;
 }
 .road.fSlash{
 position: relative;
@@ -260,9 +295,19 @@ bottom:559px;
 left:62px;
 }
 #rowSeventeen{
-  position: relative;
+position: relative;
 bottom:524px;
-left:-87px;
+left:-88px;
+}
+#rowEighteen{
+  position: relative;
+  bottom:497px;
+  left:-146px;
+}
+#rowNineteen{
+  position: relative;
+  bottom:578px;
+  left:165px;
 }
 ul{
   position: absolute;
@@ -324,37 +369,108 @@ ul{
   margin: 2px;
   text-align: center;
 }
-#endTurn{
+#boneEndTurn{
+  display: none;
+}
+#bloodEndTurn{
   display:none;
 }
-@media  (min-width:750px){
-  #gameBoard{
-    position: absolute;
-    width: 468px;
-    height: 240px;
-    background-color: rgba(0, 0, 0, 0.477);
-    z-index: -1;
-    top: 100px;
-    left:30px;
+#vertexContainer{
+  position:absolute;
+  top:100px;
+  float:left;
+  left:50px;
+  width:290px;
+  height:300px;
+  display:grid;
+  grid-template-columns:repeat(18, 15px [col-start]);
+  grid-template-rows:repeat(13, 29px [row-start]);
+  padding-bottom:10px;
+}
+.emptyVert{
+  font-size: 12px;
+  font-weight:900;
+  position: relative;
+  height:10px;
+  width:10px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background-color: transparent;
+  text-align: center;
+  margin:none;
+}
+.vertice{
+  font-size: 8px;
+  position: relative;
+  height:10px;
+  width:10px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: rgba(240, 248, 255, 1);
+  text-align: center;
+  margin:none;
+  z-index:1;
+}
+
+@keyframes roadAnimation{
+  0%{
+    bcolor: rgba(0, 0, 0, 1);
   }
-  #gameBoard::before{
-    content: "";
-    width:0;
-    height:0;
-    border-bottom: 120px solid ;
-    border-right: 182px solid transparent;
-    border-left: 182px solid transparent;
-    position: absolute;
-    top:-120px;
+  5%{
+    color: rgba(0, 0, 0, 0.9);
   }
-  #gameBoard::after{
-    content: "";
-    width:0;
-    height:0;
-    position: absolute;
-    border-top: 120px solid ;
-    border-left: 182px solid transparent;
-    border-right: 182px solid transparent;
-    bottom:-120px;
+  10%{
+    color: rgba(0, 0, 0, 0.8);
+  }
+  150%{
+    color: rgba(0, 0, 0, 0.7);
+  }
+  20%{
+    color: rgba(0, 0, 0, 0.6);
+  }
+  25%{
+    color: rgba(0, 0, 0, 0.5);
+  }
+  30%{
+    color: rgba(0, 0, 0, 0.4);
+  }
+  35%{
+    color: rgba(0, 0, 0, 0.3);
+  }
+  40%{
+    color: rgba(0, 0, 0, 0.2);
+  }
+  45%{
+    color: rgba(0, 0, 0, 0.1);
+  }
+  50%{
+    color: rgba(0, 0, 0, 0.2);
+  }
+  55%{
+    color: rgba(0, 0, 0, 0.3);
+  }
+  65%{
+    color: rgba(0, 0, 0, 0.4);
+  }
+  70%{
+    color: rgba(0, 0, 0, 0.5);
+  }
+  75%{
+    color: rgba(0, 0, 0, 0.6);
+  }
+  80%{
+    color: rgba(0, 0, 0, 0.7);
+  }
+  85%{
+    color: rgba(0, 0, 0, 0.8);
+  }
+  90%{
+    color: rgba(0, 0, 0, 0.9);
+  }
+  95%{
+    color: rgba(0, 0, 0, 1);
+  }
+  100%{
+    color: rgba(0, 0, 0, 1);
   }
 }

@@ -39,6 +39,8 @@ const gameState ={
   currentRoll:null,
 }
 //--constants--//
+const turnMessage = "its your turn";
+const roadMessage = "click road";
 const colorOptions = ['Bone','Blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const resourceNames = ['wood','ore','grain','sheep','brick'];
@@ -251,10 +253,6 @@ class Player{
   canAffordCard(){
     return (this.resourcesHeld[sheep] >= 2 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
   }
-  rollDice(){
-    const die = Math.floor(Math.random()*6) +1;
-    this.dieRoll = die;
-  }
   acquireResource(resource,quantity){
     this.resourcesHeld[resource] = this.resourcesHeld[resource] + quantity;
   }
@@ -444,15 +442,20 @@ function makeChips(){
 */
 //--cached element references--//
 const resourceTables = document.querySelectorAll('table');
-const boneEndTurnButton = document.querySelector('#boneEndTurn')
-const bloodEndTurnButton = document.querySelector('#bloodEndTurn')
-
+const boneEndTurnButton = document.querySelector('#boneEndTurn');
+const bloodEndTurnButton = document.querySelector('#bloodEndTurn');
+const boneResourceElements = document.querySelector('#plyrOneRsrceTable');
+const boneAlertMessage = document.querySelector('#pOneMessage');
+const bloodAlertMessage = document.querySelector('#pTwoMessage');
+const bloodResourceElements = document.querySelector('#plyrTwoRsrceTable');
 //--event listeners--//
 boneEndTurnButton.addEventListener('click',function(){
-
+boneEndTurnButton.style = "display:none;";
+changeTurn();
 })
 bloodEndTurnButton.addEventListener('click',function(){
-  
+  bloodEndTurnButton.style = "display:none;";
+
 })
 //--functions--//
             //initialization functions
@@ -468,15 +471,20 @@ function init(){
 function render(){
   renderBoard();
 }
-
+function renderResourceValues(){
+boneResourceElements.forEach()
+}
 function renderBoard(){
 //display current state of gameBoard
 }
 
             //game state functions
+
 function startGame(){
   rollForTurns(gameState.deckOfPlayers.roster);
+  gameState.active
 }
+function endTurun(){}
 
 function changeTurn(){
   gameState.turnCount--;
