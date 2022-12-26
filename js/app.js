@@ -41,7 +41,7 @@ const gameState ={
 let bonePendingMessage = '';
 let bloodPendingMessage = '';
 //--constants--//
-const colors =['rgb(204, 153, 102)','rgb(204, 51, 0)']
+const colors = ['rgb(204, 153, 102)','rgb(204, 51, 0)']
 const turnMessage = "its your turn";
 const roadMessage = "click road";
 const nameOptions = ['BONE','BLOOD']//options that player has for colors
@@ -220,10 +220,9 @@ const roadInfo = roadNames.map((road,index)=>{
 
 //--classes--//
 class Player{
-  constructor (playerName, playerNum, color){
+  constructor (playerName, color){
     this.playerName = playerName;
-    this.playerNum =  playerNum;
-    this.color= color;
+    this.color = color;
     this.active = false;
     this.settlementsHeld=5; //-number of settlements players hold, 5 @ start
     this.citiesHeld=4; //-number of cities player holds,  4 added @ start
@@ -322,16 +321,10 @@ class Player{
 class PlayerDeck {
   constructor(numPlayers){
     this.numPlayers = numPlayers;
-    this.roster =nameOptions;
+    this.roster = nameOptions;
   }
   populateRoster(){
-    this.roster = this.roster.map(function( idx){
-        let newPlayer = new Player(nameOptions[idx], idx, colors[idx]);
-        newPlayer.settlements = 5;
-        newPlayer.cities = 4;
-        newPlayer.roadsHeld = 15;
-        return newPlayer;
-    })  
+    this.roster = [new Player(nameOptions[0],colors[0]), new Player(nameOptions[1],colors[1])];
   }
   getRoster(){
     return this.roster;
@@ -481,15 +474,17 @@ function render(){
   renderBoard();
 }
 function renderResourceValues(){
-gameState.deckOfPlayers.roster
 }
 function renderBoard(){
-  for (element in vertexElements){
-
-  }
+  gameState.deckOfPlayers.roster.forEach(player=>{
+    player.settlementVertices.forEach(vert =>{
+    document.querySelector(`#${vert}`).style.backgroundColor = `${player.color}`;
+    })
+  })
 }
 function renderMessage(){
   boneAlertMessage.innerHTML = bonePendingMessage;
+  bloodAlertMessage.innerHTML = bloodPendingMessage;
 }
             //game state functions
 
@@ -579,7 +574,7 @@ gameState.deckOfPlayers.roster.forEach(player =>{
   player.cityVertices.forEach(vertex =>{
     keyTiles.forEach(tile => {
       if (tile.vList.includes(vertex)){
-        player.acquireResource(tile.resource, 1);
+        player.acquireResource(tile.resource, 2);
       }
     })
   })
