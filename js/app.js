@@ -29,7 +29,7 @@
 let playerNames = [];
 const gameState ={
   roundCount: 0, //the count of how many rounds have been played
-  turnCount: 1,// how many turns through round have been played
+  turnCount: 0,// how many turns through round have been played
   playing:false,
   leaderboard:[],// array of playerName strings sorted by VP, 
   deckOfPlayers:null,
@@ -37,14 +37,16 @@ const gameState ={
   development:[],
   other:[],},
   currentRoll:null,
+  activePlayer:null,
+  vrtBuyActive: false,
 }
-let bonePendingMessage = '';
-let bloodPendingMessage = '';
+let bonePendingMessage = 'ooo';
+let bloodPendingMessage = 'ooo';
 //--constants--//
 const colors = ['rgb(204, 153, 102)','rgb(204, 51, 0)']
 const turnMessage = "its your turn";
 const roadMessage = "click road";
-const nameOptions = ['BONE','BLOOD']//options that player has for colors
+const nameOptions = ['bone','blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const resourceNames = ['wood','ore','grain','sheep','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
@@ -61,8 +63,8 @@ const roadNames =    ['r1',
 'r32','r33','r34','r35','r36','r37','r38',
     'r39' ,'r40','r41','r42','r43','r44','r45', 'r46',
 'r47', 'r48','r49','r50','r51','r52','r53','r54', 'r55',
-                   'r56','r57',
-                'r58','r59','r60'];
+                  'r56','r57',
+               'r58','r59','r60'];
 const vrtxNames = ['v1','v2',  
                 'v3',    'v4', 
   'v5', 'v6',    'v7',  'v8',     'v9', 'v10',
@@ -232,6 +234,7 @@ class Player{
     this.settlementVertices=[];
     this.cityVertices=[];
     this.roadPlacements=[];
+    this.message='';
     this.hand = []; //cards[#of card types(development, vp, resources)];
     this.resourcesHeld ={
       wood:0,
@@ -450,14 +453,23 @@ const boneAlertMessage = document.querySelector('#pOneMessage');
 const bloodAlertMessage = document.querySelector('#pTwoMessage');
 const bloodResourceElements = document.querySelector('#plyrTwoRsrceTable');
 const vertexElements = document.querySelectorAll('.vertice');
+const hexElements = document.querySelectorAll('.hex')
 //--event listeners--//
 boneEndTurnButton.addEventListener('click',function(){
-boneEndTurnButton.style = "display:none;";
-changeTurn();
+  boneEndTurnButton.style = "display:none;";
+  endTurn();
 })
 bloodEndTurnButton.addEventListener('click',function(){
   bloodEndTurnButton.style = "display:none;";
-
+  endTurn()
+})
+vertexElements.forEach(element=>{
+  element.addEventListener('click', function(){
+    if(gameState.vrtBuyActive === true){
+      let loc = vrtxNames.indexOf(`${element.innerHTML}`)
+      gameState.activePlayer.buySettlement(loc);
+    }
+  })
 })
 //--functions--//
             //initialization functions
@@ -468,12 +480,21 @@ function init(){
   const vpDeck = new VpCards();
   gameState.cardDeck.resources = rDeck;
   gameState.cardDeck.development = vpDeck;
+  gameState.playing = true;
+  render();
 }
             //render functions
 function render(){
   renderBoard();
+  renderMessages();
 }
 function renderResourceValues(){
+  gameState.deckOfPlayers.roster.forEach(plyr=>{
+    if(plyr.playerName === 'bone'){
+      }
+    if (plyr.playerName === 'blood'){
+    }
+  })
 }
 function renderBoard(){
   gameState.deckOfPlayers.roster.forEach(player=>{
@@ -482,7 +503,7 @@ function renderBoard(){
     })
   })
 }
-function renderMessage(){
+function renderMessages(){
   boneAlertMessage.innerHTML = bonePendingMessage;
   bloodAlertMessage.innerHTML = bloodPendingMessage;
 }
@@ -490,17 +511,28 @@ function renderMessage(){
 
 function startGame(){
   rollForTurns(gameState.deckOfPlayers.roster);
-  gameState.active
+  gameState.activePlayer = gameState.deckOfPlayers.roster[0];
 }
-function endTurun(){}
+function endTurn(){
+  if (gameState.turnCount === 0){
+    changeTurn();
+  }else{
+    changeRound();
+  }
+}
 
 function changeTurn(){
-  gameState.turnCount--;
+  gameState.turnCount++;
+  if (gameState.deckOfPlayers.roster[`${gameState.turnCount}`].playerName === 'bone'){
+    boneEndTurnButton.style = "display:inline-block;";
+  }else{
+    bloodEndTurnButton.style = "display:inline-block;";
+  }
 }
 
 function changeRound(){
 gameState.roundCount++;
-gameState.turnCount = 1;
+gameState.turnCount = 0;
 }
 //possibly extraneous
 function hasNeighbors(location){
@@ -516,8 +548,8 @@ function hasNeighbors(location){
             //game play functions
 
 function rollForTurns(plyrRstr){
-plyrRstr.forEach(plyr =>{
-  plyr.rollDice();
+  plyrRstr.forEach(plyr =>{
+    plyr.rollDice();
   })
 if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[1].dieRoll){
   console.log('tied roll again');
@@ -529,7 +561,7 @@ if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[
 }
 
 function firstAndSecondRoundTurn(player){
-player.placeSettlement(settlementInquiry());
+  player.placeSettlement(settlementInquiry());
 }
 
 function takeTurn(player){
@@ -581,7 +613,7 @@ gameState.deckOfPlayers.roster.forEach(player =>{
 })
 }
 
-function roadInquiry(){
+async function roadInquiry(){
   return '8';
 }
 function settlementInquiry(){

@@ -56,9 +56,9 @@ p{
   width: 312px;
   height: 210px;
   background-color: rgba(131, 131, 131, 0.533);
-  top: 150px;
+  top: 145px;
   margin-bottom:30px;
-  margin-left: 22px;
+  margin-left: 25px;
 }
 #gameBoard::before{
   content: "";
@@ -169,19 +169,19 @@ margin-left: -8px;
 margin-bottom: 28px;
 }
 #hexContainer{
-margin-left: 12px;
+margin-left: 17px;
 }
 ul{
   position: absolute;
   list-style-type: none;
-  padding:0;
-  min-width:95%;
-  max-width: 100%;
+  padding:0px;
+  min-width:90vw;
+  max-width: 100vw;
   min-height:20%;
   border:5px solid rgba(61, 97, 59);
-  border-radius: 2px;
-  align-self: center;
-  bottom: 75px;
+  border-radius: 10px;
+  bottom: 10px;
+  left:0vw;
 }
 
 .playerBox{
@@ -216,12 +216,9 @@ ul{
   background-image: -webkit-radial-gradient(50% 45% , closest-corner, rgba(250, 248, 234, 0.748), rgba(88, 88, 88, 0.1), transparent);
   vertical-align: middle;
 }
-#pOneMessage{
+.message{
   font-size: 12px;
-  float:left;
-}
-#pTwoMessage{
-  font-size: 12px;
+  float: left;
 }
 .actionButton{
   display: inline-block;
@@ -244,7 +241,7 @@ border-color: red;
   position:absolute;
   top:105px;
   float:left;
-  left:58px;
+  left:64px;
   width:290px;
   height:300px;
   display:grid;
@@ -256,8 +253,8 @@ border-color: red;
   font-size: 12px;
   font-weight:900;
   position: relative;
-  height:10px;
-  width:10px;
+  height:15px;
+  width:15px;
   border: 2px solid transparent;
   border-radius: 50%;
   background-color: transparent;
@@ -265,17 +262,48 @@ border-color: red;
   margin:none;
 }
 .vertice{
-  font-size: 8px;
+  font-size: 6px;
   position: relative;
   height:10px;
   width:10px;
-  border: 2px solid rgba(240, 248, 255, .5);
+  border: 2px solid transparent;
   border-radius: 50%;
   background-color: rgba(240, 248, 255, 1);
   text-align: center;
   cursor: pointer;
   margin:none;
   z-index:1;
+}
+#roadContainer{
+  position: absolute;
+  z-index: .9;
+  display: grid;
+  width:290px;
+  height:300px;
+  top:110px;
+  left:64px;
+  grid-template-columns: 15px 30px 15px 30px 15px 30px 15px 30px 15px 30px 15px;
+  grid-template-rows:repeat(11,28px [row-start]);
+}
+.road{
+  height:6px;
+  width: 30px;
+  background-color: black;
+}
+.emptyRoad{
+  background-color: transparent;
+  width:30px;
+}
+.road.northToSouth{
+  rotate: 60deg;
+  position: relative;
+  top:-15px;
+}
+.road.southToNorth{
+  rotate: -60deg;
+  position: relative;
+
+  top:-15px;
 }
 
 @keyframes roadAnimation{
