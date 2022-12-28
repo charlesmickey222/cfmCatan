@@ -13,36 +13,51 @@
   <p>Lupas Mound</p>
 <section id ="boardContainer">
   <div id="gameBoard"></div>
-  <div id="hexContainer">
-    <span class="hexColumn" id ="cOne">
-      <div class="hex" id="t2"></div>
-      <div class="empty"></div>
-      <div class="hex" id="t10"></div>
-      <div class="empty"></div>
-    </span>
-    <span class="hexColumn" id ="cTwo">
+    <div id="hexContainer">
+      <div class="emptyHex"></div>
+      <div class="emptyHex"></div>  
+      <div class="hex" id="t2"></div>   
+      <div class="emptyHex"></div>   
+      <div class="emptyHex"></div>
+      <div class="emptyHex"></div>   
+      <div class="emptyHex"></div>
+      <div class="emptyHex"></div>
+      <div class="emptyHex"></div>   
+      <div class="emptyHex"></div>
+      <div class="hex" id="t10"></div>  
+      <div class="emptyHex"></div>   
       <div class="hex" id="t5"></div>
-      <div class="hex" id="t8"></div>
-      <div class="empty" id="t"></div>
-    </span>
-    <span class="hexColumn" id ="cThree">
+      <div class="emptyHex"></div>   
+      <div class="hex" id="t8"></div>  
+      <div class="emptyHex"></div>
       <div class="hex" id="t1"></div>
+      <div class="emptyHex"></div>   
       <div class="hex" id="t3"></div>
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
       <div class="hex" id="t7"></div>
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
       <div class="hex" id="t11"></div>
+      <div class="emptyHex"></div>
       <div class="hex" id="t13"></div>
-    </span>
-    <span class="hexColumn" id ="cFour">
+      <div class="emptyHex"></div> 
       <div class="hex" id="t6"></div>
+      <div class="emptyHex"></div> 
       <div class="hex" id="t9"></div>
-      <div class="empty" id="t"></div>
-    </span>
-    <span class="hexColumn" id ="cFive">
+      <div class="emptyhex" ></div>
       <div class="hex" id="t4"></div>
-      <div class="empty" id="t"></div>
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex"></div> 
+      <div class="emptyHex" id="t"></div>
       <div class="hex" id="t12"></div>
-      <div class="empty" id="t"></div>
-    </span>
+      <div class="emptyHex" id="t"></div>
     </div>
     <div id="vertexContainer">
       <div class="emptyVert"></div>
@@ -296,27 +311,10 @@
 <ul id='infoHub'>
   <li>
     <div class="playerBox" id="bonePlayerBox">
-      <div class="playerName">BONE<span class="message" id="pOneMessage">a</span></div>
-      <table class="resourceTable" id="plyrOneRsrceTable">
-        <tr id="wood">
-          <th>wood</th>
-        </tr>
-        <tr id="ore">
-          <th>ore</th>
-        </tr>
-        <tr id="sheep">
-          <th>sheep</th>
-        </tr>
-        <tr id="brick">
-          <th>brick</th>
-        </tr>
-        <tr id="grain">
-          <th>grain</th>
-        </tr>
-      </table>
+      <div class="playerName">BONE<span class="message" id="pOneMessage">---</span></div>
       <div class="buttonContainer">
-        <button class="actionButton roadButton" id = "boneRoad">Build Road</button>
-        <button class="actionButton" id = "boneSettlement">Build Settlement</button>
+        <button class="actionButton roadButton" id = "boneRoad">Road</button>
+        <button class="actionButton" id = "boneSettlement">Settlement</button>
         <button class="actionButton" id = "boneUpgrade">Upgrade</button>
         <button class="actionButton" id="boneVp">Buy VP</button>
         <button class="actionButton" id='boneEndTurn'>end turn</button>
@@ -325,12 +323,12 @@
   </li>
   <li>
     <div class="playerBox" id="bloodPlayerBox">
-      <div class="playerName">BLOOD<span class="message" id="pTwoMessage">a</span></div>
+      <div class="playerName">BLOOD<span class="message" id="pTwoMessage">---</span></div>
       <table class="resourceTable" id="plyrTwoRsrceTable">
         </table>
         <div class="buttonContainer">
-            <button class="actionButton" id="bloodRoad">Build Road</button>
-            <button class="actionButton">Build Settlement</button>
+            <button class="actionButton" id="bloodRoad">Road</button>
+            <button class="actionButton">Settlement</button>
             <button class="actionButton">Upgrade</button>
             <button class="actionButton">Buy VP</button>
             <button class="actionButton" id='bloodEndTurn'>end turn</button>

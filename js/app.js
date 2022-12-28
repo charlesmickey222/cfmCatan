@@ -453,7 +453,8 @@ const boneAlertMessage = document.querySelector('#pOneMessage');
 const bloodAlertMessage = document.querySelector('#pTwoMessage');
 const bloodResourceElements = document.querySelector('#plyrTwoRsrceTable');
 const vertexElements = document.querySelectorAll('.vertice');
-const hexElements = document.querySelectorAll('.hex')
+const hexElements = document.querySelectorAll('.hex');
+const roadElements = document.querySelectorAll('.road');
 //--event listeners--//
 boneEndTurnButton.addEventListener('click',function(){
   boneEndTurnButton.style = "display:none;";
@@ -469,6 +470,11 @@ vertexElements.forEach(element=>{
       let loc = vrtxNames.indexOf(`${element.innerHTML}`)
       gameState.activePlayer.buySettlement(loc);
     }
+  })
+})
+roadElements.forEach(element=>{
+  element.addEventListener('click', function(){
+    element.style.backgroundColor = gameState.activePlayer.color;
   })
 })
 //--functions--//
@@ -520,19 +526,25 @@ function endTurn(){
     changeRound();
   }
 }
-
-function changeTurn(){
-  gameState.turnCount++;
-  if (gameState.deckOfPlayers.roster[`${gameState.turnCount}`].playerName === 'bone'){
+function flipTurnButton(){
+  if (gameState.activePlayer.playerName === 'blood'){
     boneEndTurnButton.style = "display:inline-block;";
   }else{
     bloodEndTurnButton.style = "display:inline-block;";
   }
 }
 
+function changeTurn(){
+  gameState.turnCount++;
+  flipTurnButton()
+  gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
+}
+
 function changeRound(){
 gameState.roundCount++;
 gameState.turnCount = 0;
+flipTurnButton();
+gameState.activePlayer = gameState.deckOfPlayers.roster[0];
 }
 //possibly extraneous
 function hasNeighbors(location){
