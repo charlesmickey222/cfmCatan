@@ -455,7 +455,14 @@ const bloodResourceElements = document.querySelector('#plyrTwoRsrceTable');
 const vertexElements = document.querySelectorAll('.vertice');
 const hexElements = document.querySelectorAll('.hex');
 const roadElements = document.querySelectorAll('.road');
+const startGameBttn = document.querySelector('#gameStart');
+const rollDiceBttn = document.querySelector('#rollDice');
 //--event listeners--//
+startGameBttn.addEventListener('click',function(){
+  startGameBttn.style = "display:none;";
+  rollDiceBttn.style = "display:block;"
+  init();
+})
 boneEndTurnButton.addEventListener('click',function(){
   boneEndTurnButton.style = "display:none;";
   endTurn();

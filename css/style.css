@@ -281,6 +281,7 @@ button{
 }
 .gameButtons{
   position:absolute;
+  display: inline-block;
 }
 #infoHub{
   position: absolute;
