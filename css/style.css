@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Press+Start+2P&display=swap');
-
+@import url("https://kit.fontawesome.com/ec0fd5223b.js");
 @media  (min-width:3000px){
   #gameBoard{
     position: absolute;
@@ -32,7 +32,7 @@
   }
 }
 body{
-  min-width: 450px;
+  min-width: 100vw;
   min-height: 600px;
   background-color: rgba(192, 252, 192, 0.422);
   font-size:9px;
@@ -110,6 +110,8 @@ p{
   position: relative;
   margin:0px;
   padding:0px;
+
+  color: black;
 }
 
 .hex::after{
@@ -167,12 +169,12 @@ p{
 .vertice{
   font-size: 6px;
   position: relative;
-  height:10px;
-  width:10px;
+  height:12px;
+  width:12px;
   border: 2px solid transparent;
   border-radius: 50%;
   background-color: rgba(240, 248, 255, 1);
-  text-align: center;
+  color:transparent;
   cursor: pointer;
   margin:none;
   z-index:1;
@@ -280,7 +282,7 @@ p{
   min-height:20%;
   border:5px solid rgba(61, 97, 59);
   border-radius: 10px;
-  bottom: 10px;
+  bottom:10vh;
   left:0vw;
 }
 
@@ -341,6 +343,17 @@ p{
   
   text-align: center;
 }
+i{
+  z-index:1;
+  position: absolute;
+  font-size:20px;
+  color: black;
+  text-align: center;
+  top:10px;
+  left:8px;
+  clear:both;
+  
+}
 .buttonContainer{
   margin-left:10px;
   margin-right:10px;
@@ -365,4 +378,11 @@ border-color: red;
   grid-template-columns:15px 30px 15px 30px 15px 30px 15px 30px 15px 30px 15px 15px;
   grid-template-rows:repeat(13, 28px [row-start]);
   padding-bottom:10px;
+}
+.rollNumber{
+  position: absolute;
+  font-size: 14px;
+  align-self: center;
+  top:30px;
+  left:14px;
 }

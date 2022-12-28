@@ -50,7 +50,7 @@ const nameOptions = ['bone','blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const resourceNames = ['wood','ore','grain','sheep','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
-const tileRollValues = [4,4,5,2,5,5,1,3,4,6,6,5,3];
+const tileRollValues = [4,5,4,2,5,5,1,3,4,6,6,3,5];
 const tileResourceKey = ['ore','wood','grain','wood','sheep','brick','DOME','grain','ore','brick','sheep','wood','grain'];
 //const longestRoadReq = 5; iced
 //const largestArmyReq = 3; iced
@@ -472,6 +472,7 @@ vertexElements.forEach(element=>{
     }
   })
 })
+
 roadElements.forEach(element=>{
   element.addEventListener('click', function(){
     element.style.backgroundColor = gameState.activePlayer.color;
