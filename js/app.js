@@ -214,7 +214,7 @@ const vertexInfo = vrtxNames.map((vrtx,index)=>{
       isValid:true,
     }
 })
-const roadInfo = roadNames.map((road,index)=>{
+const roadInfo = roadNames.map((road)=>{
     return {name:road,
     isBuilt:false,
   }
@@ -246,9 +246,14 @@ class Player{
   }
   rollDice(){
     this.dieRoll = Math.floor(Math.random()*6)+1;
+    this.message = `u rolled ${this.dieRoll}`;
   }
   setPlayerNum(num){
     this.playerNum = num;
+  }
+  startTurn(){
+    this.message = 'roll 4 the harvest!';
+    renderMessages();
   }
   canAffordRoad(){
     return (this.resourcesHeld['wood'] >= 1 && this.resourcesHeld['brick'] >= 1);
@@ -333,11 +338,9 @@ class PlayerDeck {
     return this.roster;
   }
   sortByRoll(){
-    this.roster.sort((a,b) =>{
-      return b.dieRoll - a.dieRoll;
+      this.roster.sort((a,b) =>{
+      return a.dieRoll - b.dieRoll;
     })
-    this.roster[0].setPlayerNum[1];
-    this.roster[1].setPlayerNum[-1];
   }
   }
 
@@ -460,8 +463,36 @@ const rollDiceBttn = document.querySelector('#rollDice');
 //--event listeners--//
 startGameBttn.addEventListener('click',function(){
   startGameBttn.style = "display:none;";
+  if (gameState.playing){
+    gameState.turnCount = 1;
+    gameState.roundCount = 1;
+    gameState.deckOfPlayers.roster.forEach(player=> {
+      player.message = '---';
+    })
+    gameState.activePlayer.startTurn();
+  }else{
   rollDiceBttn.style = "display:block;"
   init();
+  }
+})
+rollDiceBttn.addEventListener('click', function(){
+  rollDiceBttn.innerHTML = 'Roll The Dice';
+  if(gameState.activePlayer){
+    gameState.activePlayer.rollDice();
+    rollDiceBttn.style = "display:none;";
+    if(gameState.roundCount === 1){
+      firstTurnButton();
+    }
+  }
+  else{
+    rollForTurns(gameState.deckOfPlayers.roster);
+    gameState.deckOfPlayers.sortByRoll();
+    gameState.activePlayer = gameState.deckOfPlayers.roster[1];
+    gameState.activePlayer.active = true;
+    startGameBttn.style = "display:block;";
+    startGameBttn.innerHTMl = 'begin';
+  }
+  renderMessages();
 })
 boneEndTurnButton.addEventListener('click',function(){
   boneEndTurnButton.style = "display:none;";
@@ -469,7 +500,7 @@ boneEndTurnButton.addEventListener('click',function(){
 })
 bloodEndTurnButton.addEventListener('click',function(){
   bloodEndTurnButton.style = "display:none;";
-  endTurn()
+  endTurn();
 })
 vertexElements.forEach(element=>{
   element.addEventListener('click', function(){
@@ -518,20 +549,31 @@ function renderBoard(){
   })
 }
 function renderMessages(){
-  boneAlertMessage.innerHTML = bonePendingMessage;
-  bloodAlertMessage.innerHTML = bloodPendingMessage;
+  gameState.deckOfPlayers.roster.forEach(player=>{
+    if (player.playerName === 'bone'){
+      boneAlertMessage.innerHTML = player.message;
+    }else{
+      bloodAlertMessage.innerHTML = player.message;
+    }
+  })
 }
             //game state functions
 
 function startGame(){
-  rollForTurns(gameState.deckOfPlayers.roster);
-  gameState.activePlayer = gameState.deckOfPlayers.roster[0];
+  init();
 }
 function endTurn(){
   if (gameState.turnCount === 0){
     changeTurn();
   }else{
     changeRound();
+  }
+}
+function firstTurnButton(){
+  if (gameState.activePlayer.playerName === 'blood'){
+    bloodEndTurnButton.style = "display:inline-block;";
+  }else{
+    boneEndTurnButton.style = "display:inline-block;";
   }
 }
 function flipTurnButton(){
@@ -543,9 +585,12 @@ function flipTurnButton(){
 }
 
 function changeTurn(){
-  gameState.turnCount++;
+  gameState.turnCount--;
   flipTurnButton()
+  gameState.activePlayer.active = false;
   gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
+  gameState.activePlayer.active = true;
+  rollDiceBttn.style = "display:block;";
 }
 
 function changeRound(){
@@ -571,42 +616,13 @@ function rollForTurns(plyrRstr){
   plyrRstr.forEach(plyr =>{
     plyr.rollDice();
   })
-if(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[1].dieRoll){
-  console.log('tied roll again');
-  rollForTurns(plyrRstr);
-  return;
-}else{
-  gameState.deckOfPlayers.sortByRoll();
+  while(gameState.deckOfPlayers.roster[0].dieRoll === gameState.deckOfPlayers.roster[1].dieRoll){
+    plyrRstr.forEach(plyr =>{
+      plyr.rollDice();
+    })
   }
 }
 
-function firstAndSecondRoundTurn(player){
-  player.placeSettlement(settlementInquiry());
-}
-
-function takeTurn(player){
-  //roll dice, corresponding resources given to all players
-  //  if seven move robber, rob peer
-  //until player clicks end turn or completes all possible moves, gameplay options will be displayed
-  if (player[playerName] === 'BONE'){
-    boneAlertMessage = turnMessage;
-  }else{
-
-  }
-  if (gameState.turnCount <= 2){
-    firstAndSecondRoundTurn(player);
-  }else{
-    player.rollDice();
-    let currentRoll = player.dieRoll;
-    if(currentRoll === 1){
-      moveDomeMaster();
-      thunderDome();
-    }
-    do{
-
-    }while(gameState.playing === true)
-  }
-}
 
 function harvest(currentRoll){
 let keyTiles = [];

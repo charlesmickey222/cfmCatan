@@ -99,7 +99,7 @@ button{
 #hexContainer{
   position: absolute;
   left:77px;
-  top: 105px;
+  top: 107px;
   width:400px;
   height:400px;
   position: relative;
@@ -200,6 +200,7 @@ button{
   height:6px;
   width: 30px;
   background-color: black;
+  border-radius: 2px;
 }
 .emptyRoad{
   background-color: transparent;
@@ -334,7 +335,7 @@ button{
   vertical-align: middle;
 }
 .message{
-  font-size: 12px;
+  font-size: 8px;
   float: right;
   margin-top: 5px;
 }
@@ -350,7 +351,6 @@ button{
   padding:1px;
   background-color:  rgb(251, 215, 171);
   margin-right: -5px;
-  
   text-align: center;
 }
 i{

@@ -311,32 +311,32 @@
   </section>
   <div class="gameButtons">
     <button id="gameStart">Start Game</button>
-    <button style="display:none;" id="rollDice">Roll The Dice</button>
+    <button style="display:none;" id="rollDice">Roll For Turns</button>
   </div>
 <ul id='infoHub'>
   <li>
     <div class="playerBox" id="bonePlayerBox">
-      <div class="playerName">BONE<span class="message" id="pOneMessage">---</span></div>
+      <div class="playerName">BONE<span style="color:white;" class="message" id="pOneMessage">---</span></div>
       <div class="buttonContainer">
         <button class="actionButton roadButton" id = "boneRoad">Road</button>
-        <button class="actionButton" id = "boneSettlement">Settlement</button>
-        <button class="actionButton" id = "boneUpgrade">Upgrade</button>
-        <button class="actionButton" id="boneVp">Buy VP</button>
-        <button class="actionButton" id='boneEndTurn'>end turn</button>
+        <button class="actionButton settlementBttn" id = "boneSettlement">Settlement</button>
+        <button class="actionButton cityBttn" id = "boneUpgrade">Upgrade</button>
+        <button class="actionButton vpBttn" id="boneVp">Buy VP</button>
+        <button class="actionButton endTurn" id='boneEndTurn'>end turn</button>
     </div>
     </div>
   </li>
   <li>
     <div class="playerBox" id="bloodPlayerBox">
-      <div class="playerName">BLOOD<span class="message" id="pTwoMessage">---</span></div>
+      <div class="playerName">BLOOD<span style="color:white;" class="message" id="pTwoMessage">---</span></div>
       <table class="resourceTable" id="plyrTwoRsrceTable">
         </table>
         <div class="buttonContainer">
-            <button class="actionButton" id="bloodRoad">Road</button>
-            <button class="actionButton">Settlement</button>
-            <button class="actionButton">Upgrade</button>
-            <button class="actionButton">Buy VP</button>
-            <button class="actionButton" id='bloodEndTurn'>end turn</button>
+            <button class="actionButton roadBttn" id="bloodRoad">Road</button>
+            <button class="actionButton settlementBttn">Settlement</button>
+            <button class="actionButton cityBttn">Upgrade</button>
+            <button class="actionButton vpBttn">Buy VP</button>
+            <button class="actionButton endTurn" id='bloodEndTurn'>end turn</button>
         </div>
     </div>
   </li>
