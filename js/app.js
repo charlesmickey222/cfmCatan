@@ -39,6 +39,8 @@ const gameState ={
   currentRoll:null,
   activePlayer:null,
   vrtBuyActive: false,
+  rdBuyActive:false,
+  initTurnCounter:0,
 }
 let bonePendingMessage = 'ooo';
 let bloodPendingMessage = 'ooo';
@@ -236,7 +238,8 @@ class Player{
     this.roadPlacements=[];
     this.message='';
     this.hand = []; //cards[#of card types(development, vp, resources)];
-    this.resourcesHeld ={
+    this.turnCondition = false;
+    this.resourcesHeld =  {
       wood:0,
       ore:0,
       sheep:0,
@@ -252,7 +255,13 @@ class Player{
     this.playerNum = num;
   }
   startTurn(){
+    if(gameState.roundCount  < 3){
+      this.message = 'place 1 stlmnt + 1 road';
+      gameState.vrtBuyActive = true;
+      gameState.rdBuyActive = true;
+    }else{
     this.message = 'roll 4 the harvest!';
+    }
     renderMessages();
   }
   canAffordRoad(){
@@ -270,14 +279,24 @@ class Player{
   acquireResource(resource,quantity){
     this.resourcesHeld[resource] = this.resourcesHeld[resource] + quantity;
   }
+  resourceStr(){
+    let tempK = Object.keys(this.resourcesHeld);
+    tempK.map((str)=>{
+      let val = this.resourcesHeld.str;
+      return `${str} ${val}`;
+    })
+    return tempK.join();
+  }
   placeRoad(location){
     if (roadInfo[location].isBuilt){
-      console.log('occupied')
+      this.setMessage('occupied');
     }
     else{
       this.roadPlacements.push(roadInfo[location].name)
       roadInfo[location].isBuilt = true;
       this.roadsHeld--;
+      renderBoard();
+      gameState.rdBuyActive = false;
     }
   }
   buyRoad(location){
@@ -289,7 +308,7 @@ class Player{
   }
   placeSettlement(location){
     if (vertexInfo[location].occupied || vertexInfo[location].isValid === false){
-      console.log('occupied')
+      this.setMessage('')
     }else{
       this.settlementVertices.push(vertexInfo[location].name)
       vertexInfo[location].occupied = true;
@@ -300,10 +319,11 @@ class Player{
       })
       this.settlementsHeld--;
       renderBoard();
+      gameState.vrtBuyActive = false;
     }
   }
   buySettlement(location){
-    if(this.canAffordRoad()){
+    if(this.canAffordSettlement()){
       this.placeRoad(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
@@ -322,7 +342,13 @@ class Player{
       this.citiesHeld--;
       this.resourcesHeld['ore']-=3;
       this.resourcesHeld['grain']-=3;
+    }else{
+      return false;
     }
+  }
+  setMessage(str){
+    this.message = str;
+    renderMessages();
   }
 }
   //creates and stores objects of classs Player in a object for functions of the game to iterate through.
@@ -448,18 +474,30 @@ function makeChips(){
 }  
 */
 //--cached element references--//
-const resourceTables = document.querySelectorAll('table');
-const boneEndTurnButton = document.querySelector('#boneEndTurn');
-const bloodEndTurnButton = document.querySelector('#bloodEndTurn');
-const boneResourceElements = document.querySelector('#plyrOneRsrceTable');
-const boneAlertMessage = document.querySelector('#pOneMessage');
-const bloodAlertMessage = document.querySelector('#pTwoMessage');
-const bloodResourceElements = document.querySelector('#plyrTwoRsrceTable');
+
 const vertexElements = document.querySelectorAll('.vertice');
 const hexElements = document.querySelectorAll('.hex');
 const roadElements = document.querySelectorAll('.road');
+
 const startGameBttn = document.querySelector('#gameStart');
 const rollDiceBttn = document.querySelector('#rollDice');
+
+const boneSettleBttn = document.querySelector('#boneSettlement');
+const boneRoadBttn = document.querySelector('#boneRoad');
+const boneUpgradeBttn = document.querySelector('#boneCity');
+const boneVpBttn = document.querySelector('#boneVP');
+const boneEndTurnButton = document.querySelector('#boneEndTurn');
+const boneAlertMessage = document.querySelector('#pOneMessage');
+const boneResourceElement = document.querySelector('#boneResources');
+
+const bloodSettleBttn = document.querySelector('#bloodSettlement');
+const bloodRoadBttn = document.querySelector('#bloodRoad');
+const bloodUpgradeBttn = document.querySelector('#bloodCity');
+const bloodVpBttn = document.querySelector('#bloodVP');
+const bloodEndTurnButton = document.querySelector('#bloodEndTurn');
+const bloodAlertMessage = document.querySelector('#pTwoMessage');
+const bloodResourceElement = document.querySelector('#bloodResources');
+
 //--event listeners--//
 startGameBttn.addEventListener('click',function(){
   startGameBttn.style = "display:none;";
@@ -470,23 +508,29 @@ startGameBttn.addEventListener('click',function(){
       player.message = '---';
     })
     gameState.activePlayer.startTurn();
+    if(gameState.roundCount === 1){
+      firstTurnButton();
+    }
   }else{
-  rollDiceBttn.style = "display:block;"
-  init();
+    rollDiceBttn.style = "display:block;";
+    init();
   }
 })
 rollDiceBttn.addEventListener('click', function(){
   rollDiceBttn.innerHTML = 'Roll The Dice';
+  startGameBttn.innerHTML= 'begin';
   if(gameState.activePlayer){
     gameState.activePlayer.rollDice();
     rollDiceBttn.style = "display:none;";
-    if(gameState.roundCount === 1){
-      firstTurnButton();
+    if(gameState.roundCount >2){
+      gameState.activePlayer.turnCondition  = true;
+      harvest(gameState.activePlayer.dieRoll);
     }
   }
   else{
     rollForTurns(gameState.deckOfPlayers.roster);
     gameState.deckOfPlayers.sortByRoll();
+    rollDiceBttn.style = "display:none;";
     gameState.activePlayer = gameState.deckOfPlayers.roster[1];
     gameState.activePlayer.active = true;
     startGameBttn.style = "display:block;";
@@ -495,25 +539,53 @@ rollDiceBttn.addEventListener('click', function(){
   renderMessages();
 })
 boneEndTurnButton.addEventListener('click',function(){
-  boneEndTurnButton.style = "display:none;";
-  endTurn();
+  if (gameState.activePlayer.turnCondition === true){
+    boneEndTurnButton.style = "display:none;";
+    endTurn();
+  }else{
+    gameState.activePlayer.setMessage('ur not done!');
+  }
 })
 bloodEndTurnButton.addEventListener('click',function(){
+  if (gameState.activePlayer.turnCondition === true){
   bloodEndTurnButton.style = "display:none;";
   endTurn();
+  }else{
+    gameState.activePlayer.setMessage('ur not done!');
+  }
 })
 vertexElements.forEach(element=>{
   element.addEventListener('click', function(){
     if(gameState.vrtBuyActive === true){
-      let loc = vrtxNames.indexOf(`${element.innerHTML}`)
+      let loc = vrtxNames.indexOf(`${element.innerHTML}`);
+      if(gameState.roundCount >2){
       gameState.activePlayer.buySettlement(loc);
+      }else{
+        gameState.activePlayer.placeSettlement(loc);
+        if(gameState.initTurnCounter === 1){
+          gameState.initTurnCounter = 0;
+          gameState.activePlayer.turnCondition = true;
+        }else{ gameState.initTurnCounter++}
+      }
     }
   })
 })
 
 roadElements.forEach(element=>{
   element.addEventListener('click', function(){
-    element.style.backgroundColor = gameState.activePlayer.color;
+    if(gameState.rdBuyActive === true){
+      let rd = roadNames.indexOf(`${element.innerHTML}`);
+      if (gameState.roundCount > 2){
+        gameState.activePlayer.buyRoad(rd);
+      }else{
+        gameState.activePlayer.placeRoad(rd);
+        if(gameState.initTurnCounter === 1){
+          gameState.initTurnCounter = 0;
+          gameState.activePlayer.turnCondition = true;
+        }else{ gameState.initTurnCounter++}
+      }
+      gameState.rdBuyActive = false;
+    }
   })
 })
 //--functions--//
@@ -535,9 +607,12 @@ function render(){
 }
 function renderResourceValues(){
   gameState.deckOfPlayers.roster.forEach(plyr=>{
+    let temp = plyr.resourceStr();
     if(plyr.playerName === 'bone'){
+        boneResourceElement.innerHTML = temp;
       }
     if (plyr.playerName === 'blood'){
+      bloodResourceElement.innerHTML = temp;
     }
   })
 }
@@ -545,6 +620,11 @@ function renderBoard(){
   gameState.deckOfPlayers.roster.forEach(player=>{
     player.settlementVertices.forEach(vert =>{
     document.querySelector(`#${vert}`).style.backgroundColor = `${player.color}`;
+    })
+  })
+  gameState.deckOfPlayers.roster.forEach(player=>{
+    player.roadPlacements.forEach(road =>{
+    document.querySelector(`#${road}`).style.backgroundColor = `${player.color}`;
     })
   })
 }
@@ -563,10 +643,13 @@ function startGame(){
   init();
 }
 function endTurn(){
-  if (gameState.turnCount === 0){
+  if (gameState.turnCount === 1){
     changeTurn();
   }else{
     changeRound();
+  }
+  if (gameState.roundCount>2){
+    rollDiceBttn.style = "display:block;";
   }
 }
 function firstTurnButton(){
@@ -588,16 +671,21 @@ function changeTurn(){
   gameState.turnCount--;
   flipTurnButton()
   gameState.activePlayer.active = false;
+  gameState.activePlayer.setMessage('---');
   gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
   gameState.activePlayer.active = true;
-  rollDiceBttn.style = "display:block;";
+  gameState.activePlayer.startTurn();
 }
 
 function changeRound(){
 gameState.roundCount++;
-gameState.turnCount = 0;
+gameState.turnCount = 1;
 flipTurnButton();
-gameState.activePlayer = gameState.deckOfPlayers.roster[0];
+gameState.activePlayer.setMessage('---');
+gameState.activePlayer.active = false;
+gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
+gameState.activePlayer.active = true;
+gameState.activePlayer.startTurn();
 }
 //possibly extraneous
 function hasNeighbors(location){
@@ -647,6 +735,7 @@ gameState.deckOfPlayers.roster.forEach(player =>{
     })
   })
 })
+renderResourceValues(); 
 }
 
 async function roadInquiry(){

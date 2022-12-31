@@ -6,7 +6,7 @@
     width: 468px;
     height: 240px;
     background-color: rgba(0, 0, 0, 0.477);
-    z-index: -1;
+    z-index: 0;
     top: 100px;
     left:30px;
   }
@@ -34,6 +34,8 @@
 body{
   min-width: 100vw;
   min-height: 600px;
+  max-height: 800px;
+  max-width:500px;
   background-color: rgba(192, 252, 192, 0.422);
   font-size:9px;
 }
@@ -65,6 +67,7 @@ button{
   top: 145px;
   margin-bottom:30px;
   margin-left: 25px;
+  cursor: pointer;
 }
 #gameBoard::before{
   content: "";
@@ -112,7 +115,7 @@ button{
   width: 30px;
   height: 52px;
   background-color: rgba(15, 0, 0, 0.2);
-  z-index: .5;
+  z-index: .25;
   position: relative;
   margin:0px;
   padding:0px;
@@ -144,7 +147,7 @@ button{
   width: 30px;
   height: 52px;
   background-color:transparent;
-  z-index: 1;
+  z-index: .25;
   position: relative;
   padding: 0;
 }
@@ -201,6 +204,10 @@ button{
   width: 30px;
   background-color: black;
   border-radius: 2px;
+  color:transparent;
+  font-size: 1px;
+  z-index: .99;
+  cursor: pointer;
 }
 .emptyRoad{
   background-color: transparent;
@@ -210,74 +217,74 @@ button{
   rotate: 60deg;
   position: relative;
   top:-15px;
+  
 }
 .road.southToNorth{
   rotate: -60deg;
   position: relative;
-
   top:-15px;
 }
 
 @keyframes roadAnimation{
   0%{
-    bcolor: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
   }
   5%{
-    color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.9);
   }
   10%{
-    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
   }
   150%{
-    color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7);
   }
   20%{
-    color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
   }
   25%{
-    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
   }
   30%{
-    color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
   }
   35%{
-    color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
   }
   40%{
-    color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
   45%{
-    color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
   }
   50%{
-    color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
   55%{
-    color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
   }
   65%{
-    color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
   }
   70%{
-    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
   }
   75%{
-    color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
   }
   80%{
-    color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7);
   }
   85%{
-    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
   }
   90%{
-    color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.9);
   }
   95%{
-    color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
   }
   100%{
-    color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
   }
 }
 .gameButtons{
