@@ -50,10 +50,10 @@ const turnMessage = "its your turn";
 const roadMessage = "click road";
 const nameOptions = ['bone','blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
-const resourceNames = ['wood','ore','grain','sheep','brick'];
+const resourceNames = ['wood','ore','grain','stock','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
 const tileRollValues = [4,5,4,2,5,5,1,3,4,6,6,3,5];
-const tileResourceKey = ['ore','wood','grain','wood','sheep','brick','DOME','grain','ore','brick','sheep','wood','grain'];
+const tileResourceKey = ['ore','wood','grain','wood','stock','brick','DOME','grain','ore','brick','stock','wood','grain'];
 //const longestRoadReq = 5; iced
 //const largestArmyReq = 3; iced
 const roadNames =    ['r1', 
@@ -242,7 +242,7 @@ class Player{
     this.resourcesHeld =  {
       wood:0,
       ore:0,
-      sheep:0,
+      stock:0,
       brick:0,
       grain:0
     }
@@ -268,24 +268,24 @@ class Player{
     return (this.resourcesHeld['wood'] >= 1 && this.resourcesHeld['brick'] >= 1);
   }
   canAffordSettlement(){
-    return (this.resourcesHeld['wood'] >= 1 && this.resourcesHeld['brick'] >= 1 && this.resourcesHeld['sheep'] >= 1 && this.resourcesHeld['grain'] >= 1);
+    return (this.resourcesHeld['wood'] >= 1 && this.resourcesHeld['brick'] >= 1 && this.resourcesHeld['stock'] >= 1 && this.resourcesHeld['grain'] >= 1);
   }
   canAffordCity(){
     return (this.resourcesHeld['ore'] >= 3 && this.resourcesHeld['grain'] >= 2);
   }
   canAffordCard(){
-    return (this.resourcesHeld[sheep] >= 2 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
+    return (this.resourcesHeld[stock] >= 2 && this.resourcesHeld[grain] >= 1 && this.resourcesHeld[ore] >= 1);
   }
   acquireResource(resource,quantity){
     this.resourcesHeld[resource] = this.resourcesHeld[resource] + quantity;
   }
   resourceStr(){
     let tempK = Object.keys(this.resourcesHeld);
-    tempK.map((str)=>{
-      let val = this.resourcesHeld.str;
-      return `${str} ${val}`;
+    let result = tempK.map((str)=>{
+      let val = this.resourcesHeld[str];
+      return `${str}: ${val}`;
     })
-    return tempK.join();
+    return result.join(' ');
   }
   placeRoad(location){
     if (roadInfo[location].isBuilt){
@@ -304,11 +304,12 @@ class Player{
       this.placeRoad(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
+      this.setMessage('solid investment');
     }
   }
   placeSettlement(location){
     if (vertexInfo[location].occupied || vertexInfo[location].isValid === false){
-      this.setMessage('')
+      this.setMessage('invalid placement')
     }else{
       this.settlementVertices.push(vertexInfo[location].name)
       vertexInfo[location].occupied = true;
@@ -324,9 +325,10 @@ class Player{
   }
   buySettlement(location){
     if(this.canAffordSettlement()){
-      this.placeRoad(location);
+      this.placeSettlement(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
+      this.setMessage('solid investment');
     }
   }
   buyCity(location){
@@ -556,6 +558,7 @@ bloodEndTurnButton.addEventListener('click',function(){
 })
 vertexElements.forEach(element=>{
   element.addEventListener('click', function(){
+    if (gameState.playing !== true){return;}
     if(gameState.vrtBuyActive === true){
       let loc = vrtxNames.indexOf(`${element.innerHTML}`);
       if(gameState.roundCount >2){
@@ -567,12 +570,15 @@ vertexElements.forEach(element=>{
           gameState.activePlayer.turnCondition = true;
         }else{ gameState.initTurnCounter++}
       }
+    }else{
+      gameState.activePlayer.setMessage('bum click');
     }
   })
 })
 
 roadElements.forEach(element=>{
   element.addEventListener('click', function(){
+    if (gameState.playing !== true){return;}
     if(gameState.rdBuyActive === true){
       let rd = roadNames.indexOf(`${element.innerHTML}`);
       if (gameState.roundCount > 2){
@@ -584,10 +590,70 @@ roadElements.forEach(element=>{
           gameState.activePlayer.turnCondition = true;
         }else{ gameState.initTurnCounter++}
       }
-      gameState.rdBuyActive = false;
+    }else{
+      gameState.activePlayer.setMessage('bum click');
     }
   })
 })
+boneRoadBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'bone'){
+      if(gameState.activePlayer.canAffordRoad()){
+        gameState.activePlayer.setMessage('which 1 do u want?')
+        gameState.rdBuyActive = true;
+      }else{
+        gameState.activePlayer.setMessage('u cannot afford');
+      }
+    }
+  }
+})
+boneSettleBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'bone'){
+      if(gameState.activePlayer.canAffordSettlement()){
+        gameState.activePlayer.setMessage('which 1 do u want?');
+        gameState.vrtBuyActive = true;
+      }else{
+        gameState.activePlayer.setMessage('u cannot afford');
+      }
+    }else{
+      gameState.activePlayer.setMessage('over here!');
+    }
+  }
+})
+
+bloodRoadBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'blood'){
+      if(gameState.activePlayer.canAffordRoad()){
+        gameState.activePlayer.setMessage('which 1 do u want?');
+        gameState.rdBuyActive = true;
+      }else{
+        gameState.activePlayer.setMessage('u cannot afford');
+      }
+    }
+  }
+})
+bloodSettleBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'blood'){
+      if(gameState.activePlayer.canAffordSettlement()){
+        gameState.activePlayer.setMessage('which 1 do u want?');
+        gameState.vrtBuyActive = true;
+      }else{
+        gameState.activePlayer.setMessage('u cannot afford');
+      }
+    }else{
+      gameState.activePlayer.setMessage('over here!');
+    }
+  }
+})
+
+
 //--functions--//
             //initialization functions
 function init(){
@@ -607,12 +673,11 @@ function render(){
 }
 function renderResourceValues(){
   gameState.deckOfPlayers.roster.forEach(plyr=>{
-    let temp = plyr.resourceStr();
     if(plyr.playerName === 'bone'){
-        boneResourceElement.innerHTML = temp;
+        boneResourceElement.innerHTML = plyr.resourceStr();
       }
     if (plyr.playerName === 'blood'){
-      bloodResourceElement.innerHTML = temp;
+      bloodResourceElement.innerHTML = plyr.resourceStr();
     }
   })
 }
@@ -678,14 +743,15 @@ function changeTurn(){
 }
 
 function changeRound(){
-gameState.roundCount++;
-gameState.turnCount = 1;
-flipTurnButton();
-gameState.activePlayer.setMessage('---');
-gameState.activePlayer.active = false;
-gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
-gameState.activePlayer.active = true;
-gameState.activePlayer.startTurn();
+  if(gameState.roundCount === 2){initialHarvest()}
+  gameState.roundCount++;
+  gameState.turnCount = 1;
+  flipTurnButton();
+  gameState.activePlayer.setMessage('---');
+  gameState.activePlayer.active = false;
+  gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
+  gameState.activePlayer.active = true;
+  gameState.activePlayer.startTurn();
 }
 //possibly extraneous
 function hasNeighbors(location){
@@ -713,37 +779,40 @@ function rollForTurns(plyrRstr){
 
 
 function harvest(currentRoll){
-let keyTiles = [];
-tileInfo.forEach(tile => {
-  if (tile.rollValue === currentRoll){
-    keyTiles.push({resource:tile.resource, vList:tile.vertices});
+  if (currentRoll >1){
+    let keyTiles = [];
+    tileInfo.forEach(tile => {
+      if (tile.rollValue === currentRoll){
+        keyTiles.push({resource:tile.resource, vList:tile.vertices});
+      }
+    })
+    gameState.deckOfPlayers.roster.forEach(player =>{
+      player.settlementVertices.forEach(vertex =>{
+        keyTiles.forEach(tile => {
+          if (tile.vList.includes(vertex)){
+            player.acquireResource(tile.resource, 1);
+          }
+        })
+      })
+      player.cityVertices.forEach(vertex =>{
+        keyTiles.forEach(tile => {
+          if (tile.vList.includes(vertex)){
+            player.acquireResource(tile.resource, 2);
+          }
+        })
+      })
+    })
   }
-})
-gameState.deckOfPlayers.roster.forEach(player =>{
-  player.settlementVertices.forEach(vertex =>{
-    keyTiles.forEach(tile => {
-      if (tile.vList.includes(vertex)){
-        player.acquireResource(tile.resource, 1);
-      }
-    })
-  })
-  player.cityVertices.forEach(vertex =>{
-    keyTiles.forEach(tile => {
-      if (tile.vList.includes(vertex)){
-        player.acquireResource(tile.resource, 2);
-      }
-    })
-  })
-})
-renderResourceValues(); 
+  renderResourceValues(); 
+}
+function initialHarvest(){
+  for(let i=0;i <2; i++){
+    for(let j=2; j<7; j++){
+      harvest(j);
+    }
+  }
 }
 
-async function roadInquiry(){
-  return '8';
-}
-function settlementInquiry(){
-  return '22';
-}
 
 
 

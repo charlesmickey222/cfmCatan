@@ -285,7 +285,7 @@
       <div class="road northToSouth" id="r50">r50</div>
       <div class="road" id="r51">r51</div>
       <div class="road southToNorth" id="r52">r52</div>
-      <div class="road emptyRoad"></div>
+      <div class="emptyRoad"></div>
       <div class="road northToSouth" id="r53">r53</div>
       <div class="road" id="r54">r54</div>
       <div class="road southToNorth" id="r55">r55</div>
@@ -317,14 +317,14 @@
   <li>
     <div class="playerBox" id="bonePlayerBox">
       <div class="playerName">BONE<span style="color:white;" class="message" id="pOneMessage">---</span></div>
-      <div class="buttonContainer">
+      <div class="buttonContainer" id="boneButtons">
         <button class="actionButton roadButton" id = "boneRoad">Road</button>
         <button class="actionButton settlementBttn" id = "boneSettlement">Settlement</button>
         <button class="actionButton cityBttn" id = "boneUpgrade">Upgrade</button>
         <button class="actionButton vpBttn" id="boneVp">Buy VP</button>
         <button class="actionButton endTurn" id='boneEndTurn'>end turn</button>
     </div>
-    <div class="resources" id="boneResources">wood 0 brick 0 ore 0 Sheep 0 grain 0</div>
+    <div class="resources" id="boneResources">wood: 0 brick: 0 ore: 0 stock: 0 grain: 0</div>
     </div>
   </li>
   <li>
@@ -332,14 +332,14 @@
       <div class="playerName">BLOOD<span style="color:white;" class="message" id="pTwoMessage">---</span></div>
       <table class="resourceTable" id="plyrTwoRsrceTable">
         </table>
-        <div class="buttonContainer">
+        <div class="buttonContainer" id="bloodButtons">
             <button class="actionButton roadBttn" id="bloodRoad">Road</button>
-            <button class="actionButton settlementBttn">Settlement</button>
-            <button class="actionButton cityBttn">Upgrade</button>
-            <button class="actionButton vpBttn">Buy VP</button>
+            <button class="actionButton settlementBttn" id="bloodSettlement">Settlement</button>
+            <button class="actionButton cityBttn" id="bloodUpgrade">Upgrade</button>
+            <button class="actionButton vpBttn" id="bloodVP">Buy VP</button>
             <button class="actionButton endTurn" id='bloodEndTurn'>end turn</button>
-            <div class="resources" id="bloodResources">wood 0 brick 0 ore 0 Sheep 0 grain 0</div>
         </div>
+        <div class="resources" id="bloodResources">wood: 0 brick: 0 ore: 0 stock: 0 grain: 0</div>
     </div>
   </li>
 </ul>
