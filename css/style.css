@@ -60,6 +60,19 @@ button{
   background-color:  rgb(251, 215, 171);
   cursor: pointer;
 }
+.hex i{
+  z-index:1;
+  position: absolute;
+  font-size:20px;
+  color: black;
+  text-align: center;
+  top:10px;
+  left:8px;
+  clear:both;
+}
+#boardContainer{
+  margin-left: 45px;
+}
 #gameBoard{
   position: absolute;
   width: 312px;
@@ -155,7 +168,7 @@ button{
   position:absolute;
   top:105px;
   float:left;
-  left:64px;
+  left:110px;
   width:290px;
   height:300px;
   display:grid;
@@ -205,7 +218,7 @@ button{
   width:290px;
   height:300px;
   top:110px;
-  left:64px;
+  left:110px;
   grid-template-columns: 15px 30px 15px 30px 15px 30px 15px 30px 15px 30px 15px;
   grid-template-rows:repeat(11,28px [row-start]);
 }
@@ -241,8 +254,38 @@ button{
   display: inline-block;
   background-color: beige;
   border: 2px solid rgba(0,0,0,.5);
-  padding: 5px;
+  padding: 10px;
+  margin:2px;
 }
+#keyButton{
+  position: absolute;
+}
+#keyBox{
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+.keyItem{
+  display: none;
+  position: absolute;
+  background-color:rgb(83, 212, 83);
+  min-width: 100px;
+  min-height: 10px;
+  padding: 1px;
+  color:black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 7px;
+}
+.keyItem i{
+  position: relative;
+  width:10px;
+  height:10px;
+}
+.showKey{
+  display: block;
+  position: relative;
+}
+
 #infoHub{
   position: absolute;
   list-style-type: none;
@@ -254,6 +297,7 @@ button{
   border-radius: 3px;
   bottom:10vh;
   left:2vw;
+  z-index: .75;
 }
 
 .playerBox{
@@ -326,17 +370,7 @@ button{
   box-shadow: 4px 5px rgba(0, 0, 0, 0.15);
   border-radius: 2px;
 }
-i{
-  z-index:1;
-  position: absolute;
-  font-size:20px;
-  color: black;
-  text-align: center;
-  top:10px;
-  left:8px;
-  clear:both;
-  
-}
+
 .buttonContainer{
   position: absolute;
   align-self: center;
@@ -382,7 +416,6 @@ button:hover{
   top:30px;
   left:14px;
 }
-
 
 
 @keyframes hoverAnimation{

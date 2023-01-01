@@ -321,6 +321,7 @@ class Player{
         vertexInfo[idx].isValid = false;
       })
       this.settlementsHeld--;
+      this.victoryPoints++;
       renderBoard();
       gameState.vrtBuyActive = false;
     }
@@ -349,8 +350,14 @@ class Player{
       gameState.upgradeActive = false;
       renderBoard();
       this.setMessage('yield doubled!');
+      this.victoryPoints++;
     }else{
       this.setMessage('invalid upgrade');
+    }
+  }
+  buyVP(){
+    if(this.canAffordCard){
+
     }
   }
   setMessage(str){
@@ -485,6 +492,7 @@ function makeChips(){
 const vertexElements = document.querySelectorAll('.vertice');
 const hexElements = document.querySelectorAll('.hex');
 const roadElements = document.querySelectorAll('.road');
+const keyBttn = document.querySelector('#keyButton');
 
 const startGameBttn = document.querySelector('#gameStart');
 const rollDiceBttn = document.querySelector('#rollDice');
@@ -545,6 +553,22 @@ rollDiceBttn.addEventListener('click', function(){
   }
   renderMessages();
 })
+keyBttn.addEventListener('click', function(){
+  let keys = document.querySelectorAll('.keyItem');
+  keys.forEach(key=>{key.classList.toggle('showKey')})
+})
+window.addEventListener('click', function(event){
+  if (!event.target.matches('#keyButton')){
+    let targs = this.document.getElementsByClassName('keyItem');
+    for (let i=0; i<targs.length;i++){
+      let openKeyItem = targs[i];
+      if(openKeyItem.classList.contains('showKey')){
+        openKeyItem.classList.remove('showKey');
+      }
+    }
+  }
+})
+
 boneEndTurnButton.addEventListener('click',function(){
   if (gameState.activePlayer.turnCondition === true){
     boneEndTurnButton.style = "display:none;";
@@ -746,6 +770,7 @@ function renderMessages(){
     }
   })
 }
+
 
             //game state functions
 
