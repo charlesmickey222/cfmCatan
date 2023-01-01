@@ -40,7 +40,9 @@ const gameState ={
   activePlayer:null,
   vrtBuyActive: false,
   rdBuyActive:false,
+  upgradeActive:false,
   initTurnCounter:0,
+  winner:null,
 }
 let bonePendingMessage = 'ooo';
 let bloodPendingMessage = 'ooo';
@@ -52,7 +54,7 @@ const nameOptions = ['bone','blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
 const resourceNames = ['wood','ore','grain','stock','brick'];
 const numTileList = ['A','F','G','B','L','H','DOME','k','I','E','J','C','D']; //made into object list later
-const tileRollValues = [4,5,4,2,5,5,1,3,4,6,6,3,5];
+const tileRollValues = [3,5,4,2,5,5,1,3,4,6,6,3,5];
 const tileResourceKey = ['ore','wood','grain','wood','stock','brick','DOME','grain','ore','brick','stock','wood','grain'];
 //const longestRoadReq = 5; iced
 //const largestArmyReq = 3; iced
@@ -344,8 +346,11 @@ class Player{
       this.citiesHeld--;
       this.resourcesHeld['ore']-=3;
       this.resourcesHeld['grain']-=3;
+      gameState.upgradeActive = false;
+      renderBoard();
+      this.setMessage('yield doubled!');
     }else{
-      return false;
+      this.setMessage('invalid upgrade');
     }
   }
   setMessage(str){
@@ -486,7 +491,7 @@ const rollDiceBttn = document.querySelector('#rollDice');
 
 const boneSettleBttn = document.querySelector('#boneSettlement');
 const boneRoadBttn = document.querySelector('#boneRoad');
-const boneUpgradeBttn = document.querySelector('#boneCity');
+const boneUpgradeBttn = document.querySelector('#boneUpgrade');
 const boneVpBttn = document.querySelector('#boneVP');
 const boneEndTurnButton = document.querySelector('#boneEndTurn');
 const boneAlertMessage = document.querySelector('#pOneMessage');
@@ -494,7 +499,7 @@ const boneResourceElement = document.querySelector('#boneResources');
 
 const bloodSettleBttn = document.querySelector('#bloodSettlement');
 const bloodRoadBttn = document.querySelector('#bloodRoad');
-const bloodUpgradeBttn = document.querySelector('#bloodCity');
+const bloodUpgradeBttn = document.querySelector('#bloodUpgrade');
 const bloodVpBttn = document.querySelector('#bloodVP');
 const bloodEndTurnButton = document.querySelector('#bloodEndTurn');
 const bloodAlertMessage = document.querySelector('#pTwoMessage');
@@ -559,8 +564,8 @@ bloodEndTurnButton.addEventListener('click',function(){
 vertexElements.forEach(element=>{
   element.addEventListener('click', function(){
     if (gameState.playing !== true){return;}
+    let loc = vrtxNames.indexOf(`${element.innerHTML}`);
     if(gameState.vrtBuyActive === true){
-      let loc = vrtxNames.indexOf(`${element.innerHTML}`);
       if(gameState.roundCount >2){
       gameState.activePlayer.buySettlement(loc);
       }else{
@@ -570,12 +575,13 @@ vertexElements.forEach(element=>{
           gameState.activePlayer.turnCondition = true;
         }else{ gameState.initTurnCounter++}
       }
+    }else if(gameState.upgradeActive){
+      gameState.activePlayer.buyCity(loc);
     }else{
       gameState.activePlayer.setMessage('bum click');
     }
   })
 })
-
 roadElements.forEach(element=>{
   element.addEventListener('click', function(){
     if (gameState.playing !== true){return;}
@@ -595,6 +601,7 @@ roadElements.forEach(element=>{
     }
   })
 })
+
 boneRoadBttn.addEventListener('click', function(){
   if (gameState.playing !== true){return;}
   if(gameState.roundCount > 2){
@@ -615,6 +622,22 @@ boneSettleBttn.addEventListener('click', function(){
       if(gameState.activePlayer.canAffordSettlement()){
         gameState.activePlayer.setMessage('which 1 do u want?');
         gameState.vrtBuyActive = true;
+      }else{
+        gameState.activePlayer.setMessage('u cannot afford');
+      }
+    }else{
+      gameState.activePlayer.setMessage('over here!');
+    }
+  }
+})
+boneUpgradeBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  gameState.vrtBuyActive = false;
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'bone'){
+      if(gameState.activePlayer.canAffordCity()){
+        gameState.activePlayer.setMessage('upgrade a settlement');
+        gameState.upgradeActive = true;
       }else{
         gameState.activePlayer.setMessage('u cannot afford');
       }
@@ -644,6 +667,22 @@ bloodSettleBttn.addEventListener('click', function(){
       if(gameState.activePlayer.canAffordSettlement()){
         gameState.activePlayer.setMessage('which 1 do u want?');
         gameState.vrtBuyActive = true;
+      }else{
+        gameState.activePlayer.setMessage('u cannot afford');
+      }
+    }else{
+      gameState.activePlayer.setMessage('over here!');
+    }
+  }
+})
+bloodUpgradeBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  gameState.vrtBuyActive = false;
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'blood'){
+      if(gameState.activePlayer.canAffordCity()){
+        gameState.activePlayer.setMessage('upgrade a settlement');
+        gameState.upgradeActive = true;
       }else{
         gameState.activePlayer.setMessage('u cannot afford');
       }
@@ -692,6 +731,11 @@ function renderBoard(){
     document.querySelector(`#${road}`).style.backgroundColor = `${player.color}`;
     })
   })
+  gameState.deckOfPlayers.roster.forEach(player=>{
+    player.cityVertices.forEach(city=>{
+      document.querySelector(`#${city}`).style.borderRadius = '10%';
+    })
+  })
 }
 function renderMessages(){
   gameState.deckOfPlayers.roster.forEach(player=>{
@@ -702,6 +746,7 @@ function renderMessages(){
     }
   })
 }
+
             //game state functions
 
 function startGame(){

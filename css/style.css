@@ -49,7 +49,7 @@ p{
   text-align: center;
   padding:20px;
   /*background-color: antiquewhite;*/
-  background-image: -webkit-linear-gradient(rgb(237, 144, 144), transparent);
+  background-image: -webkit-linear-gradient(rgb(16, 15, 15), transparent);
   border:5px transparent;
   border-radius: 5%;
 }
@@ -90,16 +90,6 @@ button{
   border-right: 156px solid transparent;
   bottom: -105px;
 }
-.hex::before{
-  content: "";
-  width:0;
-  height:0;
-  border-right: 15px solid rgba(1, 0, 0, 0.2);
-  border-top: 26px solid transparent;
-  border-bottom: 26px solid transparent;
-  position: absolute;
-  left:-15px;
-}
 #hexContainer{
   position: absolute;
   left:77px;
@@ -112,6 +102,16 @@ button{
   grid-template-rows: 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px;
   padding:0px;
 }
+.hex::before{
+  content: "";
+  width:0;
+  height:0;
+  border-right: 15px solid rgba(1, 0, 0, 0.2);
+  border-top: 26px solid transparent;
+  border-bottom: 26px solid transparent;
+  position: absolute;
+  left:-15px;
+}
 .hex{
   width: 30px;
   height: 52px;
@@ -123,7 +123,6 @@ button{
 
   color: black;
 }
-
 .hex::after{
   content: "";
   width:0;
@@ -152,7 +151,18 @@ button{
   position: relative;
   padding: 0;
 }
-
+#vertexContainer{
+  position:absolute;
+  top:105px;
+  float:left;
+  left:64px;
+  width:290px;
+  height:300px;
+  display:grid;
+  grid-template-columns:15px 30px 15px 30px 15px 30px 15px 30px 15px 30px 15px 15px;
+  grid-template-rows:repeat(13, 28px [row-start]);
+  padding-bottom:10px;
+}
 .emptyHex::after{
   content: "";
   width:0;
@@ -163,7 +173,6 @@ button{
   position: absolute;
   right: -15px;
 }
-
 .emptyVert{
   font-size: 12px;
   font-weight:900;
@@ -243,8 +252,8 @@ button{
   min-height:17%;
   border:5px solid rgba(61, 97, 59);
   border-radius: 3px;
-  bottom:5vh;
-  left:0vw;
+  bottom:10vh;
+  left:2vw;
 }
 
 .playerBox{
@@ -285,9 +294,12 @@ button{
   vertical-align: middle;
 }
 .message{
-  font-size: 8px;
-  float: right;
+  font-size: 6px;
   margin-top: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 #pOneMessage{
   float: right;
@@ -330,12 +342,7 @@ i{
   align-self: center;
   padding:4px;
 }
-#boneButtons{
-  margin: 10px 0 30px 0;
-}
-#bloodButtons{
-  margin: 30px 0 10px 0;
-}
+
 button:hover{
   border-color: red;
 }
@@ -349,24 +356,25 @@ button:hover{
   animation-duration: 3s;
   animation-iteration-count: infinite;
 }
+.resources{
+  font-size: 8px;
+}
 #boneEndTurn{
   display: none;
 }
 #bloodEndTurn{
   display:none;
 }
-#vertexContainer{
-  position:absolute;
-  top:105px;
-  float:left;
-  left:64px;
-  width:290px;
-  height:300px;
-  display:grid;
-  grid-template-columns:15px 30px 15px 30px 15px 30px 15px 30px 15px 30px 15px 15px;
-  grid-template-rows:repeat(13, 28px [row-start]);
-  padding-bottom:10px;
+#bloodResources{
+  bottom:2px;
 }
+#boneButtons{
+  margin: 10px 0 30px 0;
+}
+#bloodButtons{
+  margin: 30px 0 10px 0;
+}
+
 .rollNumber{
   position: absolute;
   font-size: 14px;
@@ -374,9 +382,7 @@ button:hover{
   top:30px;
   left:14px;
 }
-#bloodResources{
-  bottom:2px;
-}
+
 
 
 @keyframes hoverAnimation{
