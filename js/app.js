@@ -824,6 +824,7 @@ function endTurn(){
   }
   if (gameState.roundCount>2){
     rollDiceBttn.style = "display:block;";
+    checkForWinner()
   }
 }
 function firstTurnButton(){
@@ -861,6 +862,15 @@ function changeRound(){
   gameState.activePlayer = gameState.deckOfPlayers.roster[gameState.turnCount];
   gameState.activePlayer.active = true;
   gameState.activePlayer.startTurn();
+}
+function checkForWinner(){
+  gameState.deckOfPlayers.roster.forEach(plyr=>{
+    if(plyr.victoryPoints >= requiredVP){
+      gameState.winner = plyr;
+      gameState.playing = false;
+      gameState.winner.setMessage('You Have Won!');
+    }
+  })
 }
 //possibly extraneous
 function hasNeighbors(location){
