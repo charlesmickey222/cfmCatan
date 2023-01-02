@@ -689,6 +689,16 @@ boneUpgradeBttn.addEventListener('click', function(){
     }
   }
 })
+boneVpBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'bone'){
+    gameState.activePlayer.buyVP();
+    }else{
+      gameState.activePlayer.setMessage('over here!')
+    }
+  }
+})
 
 bloodRoadBttn.addEventListener('click', function(){
   if (gameState.playing !== true){return;}
@@ -731,6 +741,16 @@ bloodUpgradeBttn.addEventListener('click', function(){
       }
     }else{
       gameState.activePlayer.setMessage('over here!');
+    }
+  }
+})
+boneVpBttn.addEventListener('click', function(){
+  if (gameState.playing !== true){return;}
+  if(gameState.roundCount > 2){
+    if (gameState.activePlayer.playerName === 'blood'){
+    gameState.activePlayer.buyVP();
+    }else{
+      gameState.activePlayer.setMessage('over here!')
     }
   }
 })
