@@ -49,6 +49,7 @@ let bloodPendingMessage = 'ooo';
 //--constants--//
 const colors = ['rgb(204, 153, 102)','rgb(204, 51, 0)']
 const turnMessage = "its your turn";
+const requiredVP = 6;
 const roadMessage = "click road";
 const nameOptions = ['bone','blood']//options that player has for colors
 const devCards = ['knight','road-building','year-of-plenty','monopoly']; //array for names of developement cards
@@ -302,12 +303,16 @@ class Player{
     }
   }
   buyRoad(location){
-    if(this.canAffordRoad()){
+    if(this.canAffordRoad()&&!roadInfo[location].isBuilt){
       this.placeRoad(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
       this.setMessage('solid investment');
+      renderResourceValues();
+    }else{
+      this.setMessage('cant build there try again');
     }
+    gameState.rdBuyActive = false;
   }
   placeSettlement(location){
     if (vertexInfo[location].occupied || vertexInfo[location].isValid === false){
@@ -327,17 +332,25 @@ class Player{
     }
   }
   buySettlement(location){
-    if(this.canAffordSettlement()){
+    if(this.canAffordSettlement()&&!vertexInfo[location].occupied){
       this.placeSettlement(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
+      renderResourceValues();
       this.setMessage('solid investment');
+    }else{
+      this.setMessage('cant build there try again')
     }
+    gameState.vrtBuyActive = false;
   }
   buyCity(location){
     if(this.canAffordCity){
-      this.placeCity(location)
+      this.placeCity(location);
+      this.resourcesHeld.ore-=3;
+      this.resourcesHeld.grain-=2;
+      renderResourceValues();
     }
+    gameState.upgradeActive = false;
   }
   placeCity(location){
     if (this.settlementVertices.some(vertex => {return vertex === vertexInfo[location].name})){
@@ -352,12 +365,18 @@ class Player{
       this.setMessage('yield doubled!');
       this.victoryPoints++;
     }else{
-      this.setMessage('invalid upgrade');
+      this.setMessage('invalid upgrade try again');
     }
   }
   buyVP(){
-    if(this.canAffordCard){
-
+    if(this.canAffordCard()){
+      this.victoryPoints++;
+      this.resourcesHeld.grain--;
+      this.resourcesHeld.ore--;
+      this.resourcesHeld.stock-=2;
+      this.setMessage('Victory Point Added');
+    }else{
+      this.setMessage('cannot afford');
     }
   }
   setMessage(str){

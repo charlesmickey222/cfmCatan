@@ -1,40 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Press+Start+2P&display=swap');
 @import url("https://kit.fontawesome.com/ec0fd5223b.js");
-@media  (min-width:3000px){
-  #gameBoard{
-    position: absolute;
-    width: 468px;
-    height: 240px;
-    background-color: rgba(0, 0, 0, 0.477);
-    z-index: 0;
-    top: 100px;
-    left:30px;
-  }
-  #gameBoard::before{
-    content: "";
-    width:0;
-    height:0;
-    border-bottom: 120px solid ;
-    border-right: 182px solid transparent;
-    border-left: 182px solid transparent;
-    position: absolute;
-    top:-120px;
-  }
-  #gameBoard::after{
-    content: "";
-    width:0;
-    height:0;
-    position: absolute;
-    border-top: 120px solid ;
-    border-left: 182px solid transparent;
-    border-right: 182px solid transparent;
-    bottom:-120px;
-  }
-}
+
 body{
-  min-width: 100vw;
+  min-width: 200px;
   min-height: 600px;
-  max-height: 800px;
+  max-width: 800px;
+  max-height: 660px;
   max-width:500px;
   background-color: rgba(192, 252, 192, 0.422);
   font-size:9px;
@@ -253,6 +224,7 @@ button{
   position:absolute;
   display: inline-block;
   background-color: beige;
+  min-width: 25px;
   border: 2px solid rgba(0,0,0,.5);
   padding: 10px;
   margin:2px;
@@ -302,6 +274,7 @@ button{
 
 .playerBox{
   min-height: 50%;
+  min-width: 100%;
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -338,7 +311,7 @@ button{
   vertical-align: middle;
 }
 .message{
-  font-size: 6px;
+  font-size: 8px;
   margin-top: 5px;
   position: relative;
   display: flex;
