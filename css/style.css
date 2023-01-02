@@ -326,6 +326,7 @@ button{
 }
 .resources{
   position: absolute;
+  color: antiquewhite;
 }
 #boneResources{
   top:2px;

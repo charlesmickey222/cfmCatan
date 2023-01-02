@@ -336,6 +336,8 @@ class Player{
       this.placeSettlement(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
+      this.resourcesHeld.stock--;
+      this.resourcesHeld.grain--;
       renderResourceValues();
       this.setMessage('solid investment');
     }else{
@@ -346,8 +348,6 @@ class Player{
   buyCity(location){
     if(this.canAffordCity){
       this.placeCity(location);
-      this.resourcesHeld.ore-=3;
-      this.resourcesHeld.grain-=2;
       renderResourceValues();
     }
     gameState.upgradeActive = false;
@@ -359,7 +359,7 @@ class Player{
       this.settlementVertices.splice(temp, 1);
       this.citiesHeld--;
       this.resourcesHeld['ore']-=3;
-      this.resourcesHeld['grain']-=3;
+      this.resourcesHeld['grain']-=2;
       gameState.upgradeActive = false;
       renderBoard();
       this.setMessage('yield doubled!');
@@ -519,7 +519,7 @@ const rollDiceBttn = document.querySelector('#rollDice');
 const boneSettleBttn = document.querySelector('#boneSettlement');
 const boneRoadBttn = document.querySelector('#boneRoad');
 const boneUpgradeBttn = document.querySelector('#boneUpgrade');
-const boneVpBttn = document.querySelector('#boneVP');
+//const boneVpBttn = document.querySelector('#boneVP');
 const boneEndTurnButton = document.querySelector('#boneEndTurn');
 const boneAlertMessage = document.querySelector('#pOneMessage');
 const boneResourceElement = document.querySelector('#boneResources');
@@ -527,7 +527,7 @@ const boneResourceElement = document.querySelector('#boneResources');
 const bloodSettleBttn = document.querySelector('#bloodSettlement');
 const bloodRoadBttn = document.querySelector('#bloodRoad');
 const bloodUpgradeBttn = document.querySelector('#bloodUpgrade');
-const bloodVpBttn = document.querySelector('#bloodVP');
+//const bloodVpBttn = document.querySelector('#bloodVP');
 const bloodEndTurnButton = document.querySelector('#bloodEndTurn');
 const bloodAlertMessage = document.querySelector('#pTwoMessage');
 const bloodResourceElement = document.querySelector('#bloodResources');
@@ -551,6 +551,7 @@ startGameBttn.addEventListener('click',function(){
   }
 })
 rollDiceBttn.addEventListener('click', function(){
+  if(gameState.playing !==true){return};
   rollDiceBttn.innerHTML = 'Roll The Dice';
   startGameBttn.innerHTML= 'begin';
   if(gameState.activePlayer){
@@ -689,7 +690,8 @@ boneUpgradeBttn.addEventListener('click', function(){
     }
   }
 })
-boneVpBttn.addEventListener('click', function(){
+/*
+boneVpBttn.onclick = function(){
   if (gameState.playing !== true){return;}
   if(gameState.roundCount > 2){
     if (gameState.activePlayer.playerName === 'bone'){
@@ -698,8 +700,8 @@ boneVpBttn.addEventListener('click', function(){
       gameState.activePlayer.setMessage('over here!')
     }
   }
-})
-
+}
+*/
 bloodRoadBttn.addEventListener('click', function(){
   if (gameState.playing !== true){return;}
   if(gameState.roundCount > 2){
@@ -744,7 +746,8 @@ bloodUpgradeBttn.addEventListener('click', function(){
     }
   }
 })
-boneVpBttn.addEventListener('click', function(){
+/*
+bloodVpBttn.addEventListener('click', function(){
   if (gameState.playing !== true){return;}
   if(gameState.roundCount > 2){
     if (gameState.activePlayer.playerName === 'blood'){
@@ -754,6 +757,7 @@ boneVpBttn.addEventListener('click', function(){
     }
   }
 })
+*/
 
 
 //--functions--//
@@ -824,7 +828,10 @@ function endTurn(){
   }
   if (gameState.roundCount>2){
     rollDiceBttn.style = "display:block;";
-    checkForWinner()
+    gameState.rdBuyActive = false;
+    gameState.vrtBuyActive = false;
+    gameState.upgradeActive = false;
+    checkForWinner();
   }
 }
 function firstTurnButton(){
