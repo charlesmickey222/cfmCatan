@@ -332,7 +332,7 @@ class Player{
     }
   }
   buySettlement(location){
-    if(this.canAffordSettlement()&&!vertexInfo[location].occupied){
+    if(this.canAffordSettlement() && vertexInfo[location].isValid){
       this.placeSettlement(location);
       this.resourcesHeld.wood--;
       this.resourcesHeld.brick--;
@@ -341,7 +341,7 @@ class Player{
       renderResourceValues();
       this.setMessage('solid investment');
     }else{
-      this.setMessage('cant build there try again')
+      this.setMessage('cant build there try again');
     }
     gameState.vrtBuyActive = false;
   }
@@ -378,6 +378,13 @@ class Player{
     }else{
       this.setMessage('cannot afford');
     }
+  }
+  getRobbed(){
+    if (this.resourcesHeld.ore >= 1) this.resourcesHeld.ore--;
+    if (this.resourcesHeld.wood >= 1) this.resourcesHeld.wood--;
+    if (this.resourcesHeld.brick >= 1) this.resourcesHeld.brick--;
+    if (this.resourcesHeld.stock >= 1) this.resourcesHeld.stock--;
+    if (this.resourcesHeld.grain >= 1) this.resourcesHeld.grain--;
   }
   setMessage(str){
     this.message = str;
@@ -928,7 +935,7 @@ function harvest(currentRoll){
         })
       })
     })
-  }
+  }else{robberRolled()}
   renderResourceValues(); 
 }
 function initialHarvest(){
@@ -955,21 +962,15 @@ function tradeByPort(){
 }
 
 function robberRolled(){
-moveDomeMaster();
-thunderDome();
+  gameState.activePlayer.setMessage('your luck has run out');
+  gameState.activePlayer.getRobbed();
 }
 
-function moveDomeMaster(){
-  //place thunder dome games master in chosen tile
-  //set tiles number tile value to 0 temporarily
-}
+
 
 function thunderDome(){
 // combat >8}
 }
 
 function test(){
-  init()
-  startGame()
-  gameState.deckOfPlayers.roster[0].placeSettlement(1);
 }
